@@ -1,0 +1,23 @@
+# node modules
+node_modules
+
+# environments
+.env
+
+# prettier config
+.prettierrc
+
+# telegraf script
+script-parser/src/lib/telegraf/telegraf.sh
+
+# antlr
+script-parser/src/lib/antlr
+!script-parser/src/lib/antlr/index.ts
+!script-parser/src/lib/antlr/Influx.g4
+!script-parser/src/lib/antlr/CustomInfluxVisitor.ts
+
+# dist
+dist
+
+# dev
+dev

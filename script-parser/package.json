@@ -1,0 +1,40 @@
+{
+  "name": "trading-coach",
+  "version": "1.0.0",
+  "description": "Program to setup InfluxDB via config script for day trading.",
+  "main": "app.ts",
+  "scripts": {
+    "start": "LINEPROTOCOL_PARSER_PATH=/home/vinni/Documents/bachelorarbeit/TraderScript/lineprotocol-parser/dist/lineprotocol-parser.js SCRIPT_FILE_PATH=/home/vinni/Documents/bachelorarbeit/TraderScript/dev/input.txt SCRIPT_PARSER_LIB_DIR_PATH=/home/vinni/Documents/bachelorarbeit/TraderScript/script-parser/src/lib ts-node src/app.ts",
+    "build": "mkdir -p ./dist && webpack && minify dist/bundle.js > dist/script-parser.js && rm dist/bundle.js && mkdir -p ./dist/lib/telegraf && mkdir -p ./dist/lib/flux-scripts && cp -r ./src/lib/telegraf/telegraf.conf ./dist/lib/telegraf && cp -r ./src/lib/flux-scripts ./dist/lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://git.vinnipedia.org/vinnivitz/TraderScript.git"
+  },
+  "keywords": [
+    "antlr",
+    "js",
+    "ts",
+    "java"
+  ],
+  "author": "Vinzenz Fuhrmann",
+  "license": "ISC",
+  "dependencies": {
+    "antlr4": "4.9.2",
+    "antlr4ts": "0.5.0-alpha.4",
+    "axios": "0.21.4",
+    "base-64": "1.0.0"
+  },
+  "devDependencies": {
+    "@types/antlr4": "4.7.2",
+    "@types/base-64": "1.0.0",
+    "@types/node": "16.9.4",
+    "antlr4ts-cli": "0.5.0-alpha.4",
+    "minify": "^8.0.3",
+    "ts-loader": "^9.2.6",
+    "ts-node": "^10.4.0",
+    "typescript": "4.4.3",
+    "webpack": "^5.61.0",
+    "webpack-cli": "^4.9.1"
+  }
+}

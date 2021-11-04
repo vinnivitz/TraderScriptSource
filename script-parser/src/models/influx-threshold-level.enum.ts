@@ -1,0 +1,8 @@
+export enum INFLUX_THRESHOLD_LEVEL {
+  CRITICAL = 'CRIT',
+  UNKNOWN = 'UNKNOWN',
+  OK = 'OK',
+  INFO = 'INFO',
+  WARNING = 'WARN',
+  ANY = 'ANY'
+}

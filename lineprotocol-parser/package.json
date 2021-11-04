@@ -1,0 +1,32 @@
+{
+  "name": "lineprotocol-parser",
+  "version": "1.0.0",
+  "description": "Parser for influxdb from api data to line protocol format.",
+  "main": "app.ts",
+  "scripts": {
+    "start": "ts-node app.ts",
+    "build": "mkdir -p ./dist && webpack && minify dist/bundle.js > dist/lineprotocol-parser.js && rm dist/bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://git.vinnipedia.org/vinnivitz/TraderScript.git"
+  },
+  "keywords": [
+    "nodejs",
+    "typescript",
+    "axios"
+  ],
+  "author": "Vinzenz Fuhrmann",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1"
+  },
+  "devDependencies": {
+    "minify": "^8.0.3",
+    "ts-loader": "^9.2.6",
+    "ts-node": "^10.4.0",
+    "typescript": "4.4.3",
+    "webpack": "^5.61.0",
+    "webpack-cli": "^4.9.1"
+  }
+}
