@@ -1,0 +1,38 @@
+mat-card {
+  position: relative;
+
+  .user {
+    position: absolute;
+    right: 30px;
+    top: 20px;
+    font-size: 1.2em;
+
+    button {
+      margin-left: 10px;
+    }
+  }
+
+  mat-card-header {
+    display: flex;
+    justify-content: center;
+  }
+
+  .chart-wrapper {
+    position: relative;
+
+    mat-spinner {
+      position: absolute;
+      left: 50%;
+      top: 30%;
+    }
+  }
+
+  .menu {
+    margin-left: 20px !important;
+  }
+
+  mat-card-content {
+    display: grid;
+    grid-template-columns: 75% 25%;
+  }
+}

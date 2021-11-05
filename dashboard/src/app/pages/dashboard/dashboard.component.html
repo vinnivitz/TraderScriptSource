@@ -1,1 +1,21 @@
-<p>dashboard works!</p>
+<mat-card>
+  <span class="user">{{username | async}} <button mat-stroked-button (click)="logout()">Logout</button></span>
+  <mat-card-header>
+    <h1>TraderScript Dashboard</h1>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="chart-wrapper">
+      <chart [type]="type" [data]="data" [options]="options"></chart>
+      <mat-spinner *ngIf="!showChart"></mat-spinner>
+    </div>
+    <form [formGroup]="form">
+      <div class="menu">
+        <mat-form-field>
+          <input type="number" matInput placeholder="Interval in seconds" formControlName="interval">
+        </mat-form-field>
+        <mat-checkbox [checked]="showStockPrice">Show stock price</mat-checkbox>
+      </div>
+    </form>
+
+  </mat-card-content>
+</mat-card>

@@ -10,23 +10,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  public get isAuthenticated(): boolean {
-    const token = localStorage.getItem('token');
-    return !!token;
-  }
-
-  public signUp(data: SignUp): Observable<any> {
-    return defer(async () => {
-      const x = this.http.get(`${this.BASE_URL}/setup`).toPromise();
-      return;
-    });
-  }
-
-  public signIn(data: SignIn): Observable<any> {
-    return this.http.post(
-      `${this.BASE_URL}/signin`,
-      {},
-      { headers: { Authorization: 'Basic ' + btoa('vinnivitz:12345678') } }
-    );
+  public getUser(): Observable<any> {
+    return this.http.get(`${this.BASE_URL}/me`);
   }
 }

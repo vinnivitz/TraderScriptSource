@@ -11,8 +11,9 @@ import { Emitter, Emittable } from '@ngxs-labs/emitter';
 })
 export class LoginComponent implements OnInit {
   form: FormGroup = new FormGroup({
-    username: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required]),
+    org: new FormControl('', [Validators.required]),
+    token: new FormControl('', [Validators.required]),
+    config: new FormControl('', [Validators.required])
   });
 
   @Emitter(AuthState.onSignIn) onSignIn: Emittable<SignIn>;
