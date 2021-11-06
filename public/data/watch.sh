@@ -1,9 +1,9 @@
 #!/bin/bash
-FILE=/home/input.txt
+FILE=/home/config.txt
 if [ -f "$FILE" ]; then
-    LTIME=$(stat -c %Z /home/input.txt)
+    LTIME=$(stat -c %Z /home/config.txt)
     while true; do
-        ATIME=$(stat -c %Z /home/input.txt)
+        ATIME=$(stat -c %Z /home/config.txt)
         if [[ "$ATIME" != "$LTIME" ]]; then
             LTIME=$ATIME
             killall node -q

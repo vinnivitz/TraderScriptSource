@@ -19,8 +19,8 @@ set /p influx_data=Please input the path of the directory where InfluxDB data wi
 if "x%influx_data%x" == "xx" set influx_data=%userprofile%\.influxdata
 cls
 set script_file_path=
-set /p script_file_path=Please input the the path of your script file. [%userprofile%\input.txt]:
-if "x%script_file_path%x" == "xx" set script_file_path=%userprofile%\input.txt
+set /p script_file_path=Please input the the path of your script file. [%userprofile%\config.txt]:
+if "x%script_file_path%x" == "xx" set script_file_path=%userprofile%\config.txt
 cls
 set dashboard_port=
 set /p dashboard_port=Please input the local trading coach dashboard web ui port [4200]:
@@ -88,4 +88,4 @@ echo Starting program...
 docker rm --force !docker_container! >nul 2>&1
 del server-log.txt
 del http-log.txt
-docker run -p %influx_port%:8086 -p %dashboard_port%:4200 -v %influx_data%:/root/.influxdbv2 -v %script_file_path%:/home/input.txt --name %docker_container% --add-host host.docker.internal:host-gateway %docker_image% /home/run.sh
+docker run -p %influx_port%:8086 -p %dashboard_port%:4200 -v %influx_data%:/root/.influxdbv2 -v %script_file_path%:/home/config.txt --name %docker_container% --add-host host.docker.internal:host-gateway %docker_image% /home/run.sh
