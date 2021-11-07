@@ -11,15 +11,12 @@ export class ChartService {
 
   constructor(private http: HttpClient, private store: Store) {}
 
-  public fetchData(data: Script): Observable<any> {
-    this.http.get('assets/moin.txt', {responseType: 'text'}).subscribe((data: any) => console.log('jojo', data));
+  public fetchData(query: string): Observable<any> {
     const org = this.store.selectSnapshot(AuthState.org);
     return this.http.post(
       `${this.BASE_URL}/query`,
-      {
-        query: `from(bucket: \"${data.bucket}_buckets\")\n|>range(start: -1m)\n|>filter(fn: (r) => r._measurement == \"${data.measurement}\")`
-      },
-      { params: { org }, responseType: 'text' as 'json' }
+      { query },
+      { params: { org }, responseType: 'text' }
     );
   }
 }
