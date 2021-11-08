@@ -2,7 +2,7 @@ import { DashboardNotification } from './../../models/dashboard-notification.mod
 import { ChartState } from './../../states/chart.state';
 import { Emittable, Emitter } from '@ngxs-labs/emitter';
 import { AuthState } from './../../states/auth.state';
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Select } from '@ngxs/store';
 import { Chart, registerables, ChartData } from 'chart.js';
@@ -17,7 +17,7 @@ Chart.register(...registerables);
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   config: InfluxConfig;
   type = 'line';
   options = { animation: { duration: 0 } };
@@ -35,6 +35,7 @@ export class DashboardComponent implements OnInit {
     '1d',
     '2d'
   ];
+  intervalId: any;
 
   @Select(ChartState.data) data: Observable<ChartData>;
   @Select(ChartState.notifications)
@@ -50,14 +51,18 @@ export class DashboardComponent implements OnInit {
     this.panel = this.config.defs.map((def) => {
       return { name: def.name, expanded: false };
     });
-    setInterval(
-      () => this.onFetchData.emit(this.config),
-      this.config.interval * 1000
-    );
-    this.notifications.subscribe(x => console.log(x.length > 0))
+    this.intervalId = setInterval(() => {
+      this.onFetchData.emit(this.config);
+    }, this.config.interval * 1000);
   }
 
   ngOnInit(): void {}
+
+  ngOnDestroy(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
 
   logout(): void {
     this.onLogout.emit();

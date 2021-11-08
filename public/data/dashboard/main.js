@@ -200,6 +200,9 @@ let ChartState = ChartState_1 = class ChartState {
             return data;
         }));
     }
+    static onLogout(ctx) {
+        ctx.setState(DEFAULT_STATE);
+    }
     static csvJSON(csv) {
         const lines = csv.split('\n');
         const result = [];
@@ -248,6 +251,9 @@ Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_ngxs_labs_emitter__WEBPACK_IMPORTED_MODULE_5__["Receiver"])()
 ], ChartState, "onFetchData", null);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_ngxs_labs_emitter__WEBPACK_IMPORTED_MODULE_5__["Receiver"])()
+], ChartState, "onLogout", null);
 ChartState = ChartState_1 = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_ngxs_store__WEBPACK_IMPORTED_MODULE_3__["State"])({
         name: AUTH_STATE_TOKEN,
@@ -326,6 +332,31 @@ AuthGuard.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjecta
 
 /***/ }),
 
+/***/ "Z44Z":
+/*!****************************************!*\
+  !*** ./src/app/states/helper.state.ts ***!
+  \****************************************/
+/*! exports provided: logoutPlugin */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logoutPlugin", function() { return logoutPlugin; });
+/* harmony import */ var _ngxs_store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @ngxs/store */ "AcyG");
+
+function logoutPlugin(state, action, next) {
+    // Use the get action type helper to determine the type
+    if (Object(_ngxs_store__WEBPACK_IMPORTED_MODULE_0__["getActionTypeFromInstance"])(action).includes('AuthState.onLogout')) {
+        // if we are a logout type, lets erase all the state
+        state = {};
+    }
+    // return the next function with the empty state
+    return next(state, action);
+}
+
+
+/***/ }),
+
 /***/ "ZAI4":
 /*!*******************************!*\
   !*** ./src/app/app.module.ts ***!
@@ -349,7 +380,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ngxs_labs_emitter__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ngxs-labs/emitter */ "pNvL");
 /* harmony import */ var _ngxs_storage_plugin__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @ngxs/storage-plugin */ "2jgc");
 /* harmony import */ var _states_chart_state__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./states/chart.state */ "MhDQ");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _states_helper_state__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./states/helper.state */ "Z44Z");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/core */ "fXoL");
+
 
 
 
@@ -370,10 +403,11 @@ __webpack_require__.r(__webpack_exports__);
 class AppModule {
 }
 AppModule.ɵfac = function AppModule_Factory(t) { return new (t || AppModule)(); };
-AppModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdefineNgModule"]({ type: AppModule, bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"]] });
-AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdefineInjector"]({ providers: [
+AppModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵdefineNgModule"]({ type: AppModule, bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"]] });
+AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵdefineInjector"]({ providers: [
         _guards_auth_guard__WEBPACK_IMPORTED_MODULE_6__["AuthGuard"],
-        { provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HTTP_INTERCEPTORS"], useClass: _services_interceptor_service__WEBPACK_IMPORTED_MODULE_0__["InterceptorService"], multi: true }
+        { provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HTTP_INTERCEPTORS"], useClass: _services_interceptor_service__WEBPACK_IMPORTED_MODULE_0__["InterceptorService"], multi: true },
+        { provide: _ngxs_store__WEBPACK_IMPORTED_MODULE_7__["NGXS_PLUGINS"], useValue: _states_helper_state__WEBPACK_IMPORTED_MODULE_13__["logoutPlugin"], multi: true }
     ], imports: [[
             _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
             _app_routing_module__WEBPACK_IMPORTED_MODULE_2__["AppRoutingModule"],
@@ -385,7 +419,7 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdefineInjecto
             _ngxs_storage_plugin__WEBPACK_IMPORTED_MODULE_11__["NgxsStoragePluginModule"].forRoot({ key: [_states_auth_state__WEBPACK_IMPORTED_MODULE_8__["AuthState"], _states_chart_state__WEBPACK_IMPORTED_MODULE_12__["ChartState"]] }),
             _ngxs_labs_emitter__WEBPACK_IMPORTED_MODULE_10__["NgxsEmitPluginModule"].forRoot()
         ]] });
-(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵsetNgModuleScope"](AppModule, { declarations: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"]], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
+(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵsetNgModuleScope"](AppModule, { declarations: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"]], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
         _app_routing_module__WEBPACK_IMPORTED_MODULE_2__["AppRoutingModule"],
         _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_4__["BrowserAnimationsModule"],
         _angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClientModule"], _ngxs_store__WEBPACK_IMPORTED_MODULE_7__["ɵk"], _ngxs_storage_plugin__WEBPACK_IMPORTED_MODULE_11__["NgxsStoragePluginModule"], _ngxs_labs_emitter__WEBPACK_IMPORTED_MODULE_10__["NgxsEmitPluginModule"]] }); })();
@@ -404,12 +438,11 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdefineInjecto
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthState", function() { return AuthState; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
-/* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../services/auth.service */ "lGQG");
-/* harmony import */ var _ngxs_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ngxs/store */ "AcyG");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "qCKp");
-/* harmony import */ var _ngxs_labs_emitter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ngxs-labs/emitter */ "pNvL");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/router */ "tyNb");
+/* harmony import */ var _ngxs_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ngxs/store */ "AcyG");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "qCKp");
+/* harmony import */ var _ngxs_labs_emitter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ngxs-labs/emitter */ "pNvL");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "tyNb");
 var AuthState_1;
 
 
@@ -418,19 +451,14 @@ var AuthState_1;
 
 
 
-
-const AUTH_STATE_TOKEN = new _ngxs_store__WEBPACK_IMPORTED_MODULE_2__["StateToken"]('auth');
+const AUTH_STATE_TOKEN = new _ngxs_store__WEBPACK_IMPORTED_MODULE_1__["StateToken"]('auth');
 const DEFAULT_STATE = {
-    username: null,
-    token: null,
-    org: null,
-    config: null
+    token: null
 };
 let AuthState = AuthState_1 = class AuthState {
     constructor(inj) {
-        AuthState_1.resource = inj.get(_services_auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"]);
-        AuthState_1.ngZone = inj.get(_angular_core__WEBPACK_IMPORTED_MODULE_5__["NgZone"]);
-        AuthState_1.router = inj.get(_angular_router__WEBPACK_IMPORTED_MODULE_6__["Router"]);
+        AuthState_1.ngZone = inj.get(_angular_core__WEBPACK_IMPORTED_MODULE_4__["NgZone"]);
+        AuthState_1.router = inj.get(_angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"]);
     }
     static isLoggedIn(state) {
         return !!state.token;
@@ -440,7 +468,7 @@ let AuthState = AuthState_1 = class AuthState {
     }
     static onSignIn(ctx, action) {
         const token = action.payload.token;
-        return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["defer"])(() => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["defer"])(() => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             ctx.patchState({ token });
             this.ngZone.run(() => this.router.navigateByUrl('dashboard'));
         }));
@@ -450,22 +478,22 @@ let AuthState = AuthState_1 = class AuthState {
         this.ngZone.run(() => this.router.navigateByUrl('login'));
     }
 };
-AuthState.ɵfac = function AuthState_Factory(t) { return new (t || AuthState)(_angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵinject"](_angular_core__WEBPACK_IMPORTED_MODULE_5__["Injector"])); };
-AuthState.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdefineInjectable"]({ token: AuthState, factory: AuthState.ɵfac, providedIn: 'root' });
+AuthState.ɵfac = function AuthState_Factory(t) { return new (t || AuthState)(_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵinject"](_angular_core__WEBPACK_IMPORTED_MODULE_4__["Injector"])); };
+AuthState.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdefineInjectable"]({ token: AuthState, factory: AuthState.ɵfac, providedIn: 'root' });
 Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_ngxs_store__WEBPACK_IMPORTED_MODULE_2__["Selector"])()
+    Object(_ngxs_store__WEBPACK_IMPORTED_MODULE_1__["Selector"])()
 ], AuthState, "isLoggedIn", null);
 Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_ngxs_store__WEBPACK_IMPORTED_MODULE_2__["Selector"])()
+    Object(_ngxs_store__WEBPACK_IMPORTED_MODULE_1__["Selector"])()
 ], AuthState, "token", null);
 Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_ngxs_labs_emitter__WEBPACK_IMPORTED_MODULE_4__["Receiver"])()
+    Object(_ngxs_labs_emitter__WEBPACK_IMPORTED_MODULE_3__["Receiver"])()
 ], AuthState, "onSignIn", null);
 Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_ngxs_labs_emitter__WEBPACK_IMPORTED_MODULE_4__["Receiver"])()
+    Object(_ngxs_labs_emitter__WEBPACK_IMPORTED_MODULE_3__["Receiver"])()
 ], AuthState, "onLogout", null);
 AuthState = AuthState_1 = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_ngxs_store__WEBPACK_IMPORTED_MODULE_2__["State"])({
+    Object(_ngxs_store__WEBPACK_IMPORTED_MODULE_1__["State"])({
         name: AUTH_STATE_TOKEN,
         defaults: DEFAULT_STATE
     })

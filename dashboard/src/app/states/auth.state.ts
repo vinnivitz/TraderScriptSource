@@ -1,4 +1,3 @@
-import { AuthService } from './../services/auth.service';
 import { AuthStateModel } from './../models/auth-state.model';
 import { Injectable, Injector } from '@angular/core';
 import { Selector, State, StateContext, StateToken } from '@ngxs/store';
@@ -10,10 +9,7 @@ import { Router } from '@angular/router';
 
 const AUTH_STATE_TOKEN = new StateToken<AuthStateModel>('auth');
 const DEFAULT_STATE = {
-  username: null,
-  token: null,
-  org: null,
-  config: null
+  token: null
 };
 @State<AuthStateModel>({
   name: AUTH_STATE_TOKEN,
@@ -21,12 +17,10 @@ const DEFAULT_STATE = {
 })
 @Injectable({ providedIn: 'root' })
 export class AuthState {
-  private static resource: AuthService;
   private static ngZone: NgZone;
   private static router: Router;
 
   constructor(inj: Injector) {
-    AuthState.resource = inj.get(AuthService);
     AuthState.ngZone = inj.get(NgZone);
     AuthState.router = inj.get(Router);
   }

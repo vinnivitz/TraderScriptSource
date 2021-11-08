@@ -8,7 +8,7 @@
     <div class="content">
       <div class="chart-wrapper">
         <chart type="line" [data]="data | async" [options]="{ animation: { duration: 0 } }"></chart>
-        <mat-spinner *ngIf="(data | async)?.datasets[0]?.data.length === 0"></mat-spinner>
+        <mat-spinner *ngIf="(data | async)?.datasets && (data | async).datasets[0]?.data.length === 0"></mat-spinner>
       </div>
       <div class="menu">
         <mat-form-field>

@@ -6,12 +6,13 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthGuard } from './guards/auth.guard';
-import { NgxsModule } from '@ngxs/store';
+import { NgxsModule, NGXS_PLUGINS } from '@ngxs/store';
 import { AuthState } from './states/auth.state';
 import { environment } from 'src/environments/environment';
 import { NgxsEmitPluginModule } from '@ngxs-labs/emitter';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { ChartState } from './states/chart.state';
+import { logoutPlugin } from './states/helper.state';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,7 +29,8 @@ import { ChartState } from './states/chart.state';
   ],
   providers: [
     AuthGuard,
-    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
+    { provide: NGXS_PLUGINS, useValue: logoutPlugin, multi: true }
   ],
   bootstrap: [AppComponent]
 })
