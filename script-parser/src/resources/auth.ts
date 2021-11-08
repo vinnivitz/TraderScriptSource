@@ -1,3 +1,4 @@
+import { INFLUX_SYSTEM_BUCKET } from './../models/influx-system-bucket.enum';
 import { INFLUX_BUCKET_TYPE } from './../models/influx-bucket-type.enum';
 import { InfluxBucket } from './../models/influx-bucket.model';
 import { Authorization, FLAG, INFLUX_ENTITY_TYPE } from '../models';
@@ -87,4 +88,24 @@ async function cleanupInflux(): Promise<void> {
       }
     });
   });
+  const date = new Date();
+  await axios.post(
+    `${globals.metaData.influxApiUrl}/delete`,
+    {
+      start: '1970-01-01T00:00:00Z',
+      stop: `${date.getFullYear()}-${
+        date.getMonth() + 1 < 10
+          ? '0' + date.getMonth() + 1
+          : date.getMonth() + 1
+      }-${
+        date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
+      }T23:59:59Z`
+    },
+    {
+      params: {
+        bucket: INFLUX_SYSTEM_BUCKET.MONITORING,
+        org: globals.metaData.org
+      }
+    }
+  );
 }

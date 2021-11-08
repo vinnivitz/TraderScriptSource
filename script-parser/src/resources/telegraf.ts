@@ -7,7 +7,7 @@ import {
 } from '../models';
 import { spawn, spawnSync } from 'child_process';
 import { writeFileSync } from 'fs';
-import { globals, createOrReplaceInfluxData, replaceInFile } from '../utils';
+import { globals, createInfluxData, replaceInFile } from '../utils';
 
 /**
  * Sets up the telegraf config for the InfluxDB
@@ -23,14 +23,10 @@ export async function setupTelegraf(flags: Map<string, string>): Promise<void> {
   setStockQueryScript();
 
   // create new influx bucket
-  await createOrReplaceInfluxData(
-    INFLUX_ENTITY_TYPE.BUCKETS,
-    globals.metaData.influxBucket,
-    {
-      orgID: globals.metaData.orgID,
-      name: globals.metaData.influxBucket
-    }
-  );
+  await createInfluxData(INFLUX_ENTITY_TYPE.BUCKETS, {
+    orgID: globals.metaData.orgID,
+    name: globals.metaData.influxBucket
+  });
 
   await createTelegrafConfig(flags);
 }
@@ -69,15 +65,13 @@ async function createTelegrafConfig(flags: Map<string, string>): Promise<void> {
     [FLAG.SCRIPT1, `${globals.metaData.libDirPath}/telegraf/telegraf.sh`]
   );
   const name = `${flags.get(FLAG.NAME)}_${INFLUX_ENTITY_TYPE.TELEGRAFS}`;
-  const result = await createOrReplaceInfluxData<TelegrafConfig>(
+  const result = await createInfluxData<TelegrafConfig>(
     INFLUX_ENTITY_TYPE.TELEGRAFS,
-    name,
     {
       name,
       orgID: globals.metaData.orgID,
       config
-    },
-    'configurations'
+    }
   );
   const configID = result.id;
   runTelegraf(configID);
@@ -148,5 +142,8 @@ function createTelegrafExecScript(flags: Map<string, string>): void {
   writeFileSync(`${globals.metaData.libDirPath}/telegraf/telegraf.sh`, script, {
     flag: 'w'
   });
-  spawnSync('chmod', ['+x', `${globals.metaData.libDirPath}/telegraf/telegraf.sh`]);
+  spawnSync('chmod', [
+    '+x',
+    `${globals.metaData.libDirPath}/telegraf/telegraf.sh`
+  ]);
 }

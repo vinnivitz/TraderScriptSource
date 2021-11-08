@@ -1,6 +1,6 @@
 import {
   globals,
-  createOrReplaceInfluxData,
+  createInfluxData,
   replaceInFile,
   extractPeriodNumberFromString
 } from '../utils';
@@ -29,16 +29,12 @@ export async function setupIndicators(
   flags: Map<string, string>
 ): Promise<void> {
   const script = generateDownsamplingScript(flags);
-  await createOrReplaceInfluxData(
-    INFLUX_ENTITY_TYPE.TASKS,
-    `${flags.get(FLAG.ENDPOINT)}_${INFLUX_ENTITY_TYPE.TASKS}`,
-    {
-      org: globals.metaData.org,
-      orgID: globals.metaData.orgID,
-      status: INFLUX_STATUS.ACTIVE,
-      flux: script
-    }
-  );
+  await createInfluxData(INFLUX_ENTITY_TYPE.TASKS, {
+    org: globals.metaData.org,
+    orgID: globals.metaData.orgID,
+    status: INFLUX_STATUS.ACTIVE,
+    flux: script
+  });
   await createAlert(flags);
 }
 
@@ -98,37 +94,31 @@ async function createCheck(flags: Map<string, string>): Promise<void> {
   );
   const endpoint = flags.get(FLAG.ENDPOINT);
 
-  await createOrReplaceInfluxData(
-    INFLUX_ENTITY_TYPE.CHECKS,
-    `${endpoint}_${INFLUX_ENTITY_TYPE.CHECKS}`,
-    {
-      name: `${endpoint}_${INFLUX_ENTITY_TYPE.CHECKS}`,
-      orgID: globals.metaData.orgID,
-      query: { text: script },
-      every: globals.metaData.interval,
-      offset: `${
-        extractPeriodNumberFromString(globals.metaData.influxOffset) + 1
-      }s`,
-      status: INFLUX_STATUS.ACTIVE,
-      statusMessageTemplate: `${flags.get(FLAG.INDICATOR1)} ${flags.get(
-        FLAG.LOGICAL_OPERATOR
-      )} ${flags.get(FLAG.INDICATOR2)}`,
-      thresholds: [
-        {
-          allValues: false,
-          level: INFLUX_THRESHOLD_LEVEL.CRITICAL,
-          min: 0.5,
-          max: 1.5,
-          within: true,
-          type: INFLUX_THRESHOLD_TYPE.RANGE
-        }
-      ],
-      type: INFLUX_CHECK_TYPE.THRESHOLD,
-      tags: [
-        { key: 'check_type', value: flags.get(FLAG.ENDPOINT) }
-      ]
-    }
-  );
+  await createInfluxData(INFLUX_ENTITY_TYPE.CHECKS, {
+    name: `${endpoint}_${INFLUX_ENTITY_TYPE.CHECKS}`,
+    orgID: globals.metaData.orgID,
+    query: { text: script },
+    every: globals.metaData.interval,
+    offset: `${
+      extractPeriodNumberFromString(globals.metaData.influxOffset) + 1
+    }s`,
+    status: INFLUX_STATUS.ACTIVE,
+    statusMessageTemplate: `${flags.get(FLAG.INDICATOR1)} ${flags.get(
+      FLAG.LOGICAL_OPERATOR
+    )} ${flags.get(FLAG.INDICATOR2)}`,
+    thresholds: [
+      {
+        allValues: false,
+        level: INFLUX_THRESHOLD_LEVEL.CRITICAL,
+        min: 0.5,
+        max: 1.5,
+        within: true,
+        type: INFLUX_THRESHOLD_TYPE.RANGE
+      }
+    ],
+    type: INFLUX_CHECK_TYPE.THRESHOLD,
+    tags: [{ key: 'check_type', value: flags.get(FLAG.ENDPOINT) }]
+  });
 }
 
 /**
@@ -142,9 +132,8 @@ async function createEndpoint(
 ): Promise<InfluxNotificationEndpoint> {
   const endpoint = flags.get(FLAG.ENDPOINT);
 
-  return createOrReplaceInfluxData<InfluxNotificationEndpoint>(
+  return createInfluxData<InfluxNotificationEndpoint>(
     INFLUX_ENTITY_TYPE.NOTIFICATION_ENDPOINTS,
-    `${endpoint}_${INFLUX_ENTITY_TYPE.NOTIFICATION_ENDPOINTS}`,
     {
       name: `${endpoint}_${INFLUX_ENTITY_TYPE.NOTIFICATION_ENDPOINTS}`,
       orgID: globals.metaData.orgID,
@@ -153,9 +142,7 @@ async function createEndpoint(
       url: globals.indicators.get(endpoint).data,
       method: REQUEST_METHOD.POST,
       authMethod: INFLUX_AUTH_METHOD.NONE
-    },
-    null,
-    { orgID: globals.metaData.orgID }
+    }
   );
 }
 
@@ -175,30 +162,26 @@ async function createRule(
     extractPeriodNumberFromString(globals.metaData.interval) * 2
   }s`;
 
-  await createOrReplaceInfluxData(
-    INFLUX_ENTITY_TYPE.NOTIFICATION_RULES,
-    `${endpoint}_${INFLUX_ENTITY_TYPE.NOTIFICATION_RULES}`,
-    {
-      endpointID,
-      orgID: globals.metaData.orgID,
-      status: INFLUX_STATUS.ACTIVE,
-      name: `${endpoint}_${INFLUX_ENTITY_TYPE.NOTIFICATION_RULES}`,
-      every: period,
-      offset: globals.metaData.influxOffset,
-      statusRules: [
-        {
-          currentLevel: INFLUX_THRESHOLD_LEVEL.CRITICAL,
-          previousLevel: INFLUX_THRESHOLD_LEVEL.OK
-        }
-      ],
-      tagRules: [
-        {
-          key: 'check_type',
-          value: flags.get(FLAG.ENDPOINT),
-          operator: 'equal'
-        }
-      ],
-      type: INFLUX_ENDPOINT_DESTINATION.HTTP
-    }
-  );
+  await createInfluxData(INFLUX_ENTITY_TYPE.NOTIFICATION_RULES, {
+    endpointID,
+    orgID: globals.metaData.orgID,
+    status: INFLUX_STATUS.ACTIVE,
+    name: `${endpoint}_${INFLUX_ENTITY_TYPE.NOTIFICATION_RULES}`,
+    every: period,
+    offset: globals.metaData.influxOffset,
+    statusRules: [
+      {
+        currentLevel: INFLUX_THRESHOLD_LEVEL.CRITICAL,
+        previousLevel: INFLUX_THRESHOLD_LEVEL.OK
+      }
+    ],
+    tagRules: [
+      {
+        key: 'check_type',
+        value: flags.get(FLAG.ENDPOINT),
+        operator: 'equal'
+      }
+    ],
+    type: INFLUX_ENDPOINT_DESTINATION.HTTP
+  });
 }

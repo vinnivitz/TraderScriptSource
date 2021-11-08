@@ -35,27 +35,9 @@ export async function executeSequentially<T>(
  * @param {object} [params] optional query params for request
  * @return {*}  {Promise<T>}
  */
-export async function createOrReplaceInfluxData<
+export async function createInfluxData<
   T extends { name?: string; id?: string }
->(
-  type: INFLUX_ENTITY_TYPE,
-  name: string,
-  requestBody: object,
-  dataKey?: string,
-  params?: object
-): Promise<T> {
-  const entities: T[] = (
-    await axios.get(`${globals.metaData.influxApiUrl}/${type}`, { params })
-  )?.data[dataKey ?? type];
-  const existing =
-    entities &&
-    Array.isArray(entities) &&
-    entities.find((value) => value.name === name);
-  if (existing) {
-    await axios.delete(
-      `${globals.metaData.influxApiUrl}/${type}/${existing.id}`
-    );
-  }
+>(type: INFLUX_ENTITY_TYPE, requestBody: object): Promise<T> {
   return (
     await axios.post(`${globals.metaData.influxApiUrl}/${type}`, requestBody)
   )?.data;
@@ -78,7 +60,9 @@ export function replaceInFile(
 ): string {
   let file =
     type === SCRIPT_TYPE.TELEGRAF
-      ? readFileSync(`${globals.metaData.libDirPath}/telegraf/telegraf.conf`).toString()
+      ? readFileSync(
+          `${globals.metaData.libDirPath}/telegraf/telegraf.conf`
+        ).toString()
       : getScriptByType(type);
   args.forEach((arg) => {
     file = file
@@ -124,5 +108,7 @@ function sanitizeDuplicateIdentifier(name: string, file: string): string {
  * @returns {*}  {string}
  */
 function getScriptByType(type: SCRIPT_TYPE): string {
-  return readFileSync(`${globals.metaData.libDirPath}/flux-scripts/${type}.flux`).toString();
+  return readFileSync(
+    `${globals.metaData.libDirPath}/flux-scripts/${type}.flux`
+  ).toString();
 }
