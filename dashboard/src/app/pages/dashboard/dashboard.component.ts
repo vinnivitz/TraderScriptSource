@@ -38,7 +38,7 @@ export class DashboardComponent implements OnInit {
 
   @Select(ChartState.data) data: Observable<ChartData>;
   @Select(ChartState.notifications)
-  notifications: Observable<DashboardNotification>;
+  notifications: Observable<DashboardNotification[]>;
 
   @Emitter(ChartState.onFetchData) onFetchData: Emittable<any>;
   @Emitter(AuthState.onLogout) onLogout: Emittable<void>;
@@ -54,6 +54,7 @@ export class DashboardComponent implements OnInit {
       () => this.onFetchData.emit(this.config),
       this.config.interval * 1000
     );
+    this.notifications.subscribe(x => console.log(x.length > 0))
   }
 
   ngOnInit(): void {}

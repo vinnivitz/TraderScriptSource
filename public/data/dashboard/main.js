@@ -157,7 +157,7 @@ let ChartState = ChartState_1 = class ChartState {
             const labels = this.getLabels(stock);
             data.labels = labels.slice(0, labels.length - 2);
             const notifications = this.csvJSON(yield this.resource
-                .fetchData(config.org, `from(bucket: \"_monitoring\")\n|>range(start: -100m)\n|>filter(fn: (r) => r._measurement == \"notifications\" and r._field == \"_status_timestamp\")`)
+                .fetchData(config.org, `from(bucket: \"_monitoring\")\n|>range(start: -100m)\n|>filter(fn: (r) => r._measurement == \"notifications\" and r._field == \"_message\")`)
                 .toPromise());
             const dashboardNotifications = notifications
                 .slice(0, notifications.length - 2)
@@ -165,6 +165,7 @@ let ChartState = ChartState_1 = class ChartState {
                 number: ++i,
                 name: notification['check_type\r'].substring(0, notification['check_type\r'].length - 2),
                 time: this.getTimeFromDate(new Date(notification._time)),
+                description: notification._value,
                 sent: notification._sent
             }));
             yield this.executeSequentially(config.defs, (def) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {

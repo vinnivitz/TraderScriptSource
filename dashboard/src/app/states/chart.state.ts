@@ -64,7 +64,7 @@ export class ChartState {
         await this.resource
           .fetchData(
             config.org,
-            `from(bucket: \"_monitoring\")\n|>range(start: -100m)\n|>filter(fn: (r) => r._measurement == \"notifications\" and r._field == \"_status_timestamp\")`
+            `from(bucket: \"_monitoring\")\n|>range(start: -100m)\n|>filter(fn: (r) => r._measurement == \"notifications\" and r._field == \"_message\")`
           )
           .toPromise()
       );
@@ -77,6 +77,7 @@ export class ChartState {
             notification['check_type\r'].length - 2
           ),
           time: this.getTimeFromDate(new Date(notification._time)),
+          description: notification._value,
           sent: notification._sent
         }));
       await this.executeSequentially(config.defs, async (def) => {

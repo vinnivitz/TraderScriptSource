@@ -3,4 +3,5 @@ export interface DashboardNotification {
   name?: string;
   time?: string;
   sent?: boolean;
+  description?: string;
 }
