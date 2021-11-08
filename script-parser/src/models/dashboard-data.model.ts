@@ -3,6 +3,7 @@
  */
 export interface DashboardData {
   username?: string;
+  org?: string;
   configName?: string;
-  defs?: { name: string; type: string }[];
+  defs?: { name: string; type: string; period: string }[];
 }

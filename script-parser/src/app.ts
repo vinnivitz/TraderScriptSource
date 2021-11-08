@@ -1,7 +1,13 @@
 import { DashboardData } from './models/dashboard-data.model';
 import { CharStreams, CommonTokenStream, ParserRuleContext } from 'antlr4ts';
 import { readFileSync, writeFileSync } from 'fs';
-import { ANTLRTree, COMMAND, FLAG } from './models';
+import {
+  ANTLRTree,
+  COMMAND,
+  FLAG,
+  INFLUX_ENTITY_TYPE,
+  SCRIPT_TYPE
+} from './models';
 import { InfluxLexer, InfluxParser, CustomInfluxVisitor } from './lib/antlr';
 import {
   authenticate,
@@ -49,7 +55,8 @@ async function execRequests(tree: ANTLRTree): Promise<void> {
       case COMMAND.AUTH:
         await authenticate(flags);
         dashboardData.username = flags.get(FLAG.USERNAME);
-        console.log('User authenticated user to InfluxDB.');
+        dashboardData.org = flags.get(FLAG.INFLUX_ORGANIZATION);
+        console.log('User authenticated to InfluxDB.');
         break;
       case COMMAND.CONFIG:
         await setupTelegraf(flags);
@@ -58,10 +65,14 @@ async function execRequests(tree: ANTLRTree): Promise<void> {
         break;
       case COMMAND.DEFINITION:
         await setupDefinition(flags);
-        dashboardData.defs.push({
-          name: flags.get(FLAG.NAME),
-          type: flags.get(FLAG.TYPE)
-        });
+        const type = flags.get(FLAG.TYPE);
+        if (type !== SCRIPT_TYPE.ENDPOINT) {
+          dashboardData.defs.push({
+            name: flags.get(FLAG.NAME),
+            type: flags.get(FLAG.TYPE),
+            period: flags.get(FLAG.PERIOD)
+          });
+        }
         console.log(`Setup definition ${flags.get(FLAG.NAME)}.`);
         break;
       case COMMAND.CONDITION:
@@ -117,11 +128,10 @@ function initAxios(): void {
  */
 function initMetaData(): void {
   globals.metaData.influxOffset = process.env.INFLUX_OFFSET ?? '1s';
-  globals.metaData.influxStockMeasurement =
-    process.env.INFLUX_STOCK_MEASUREMENT ?? 'stock';
+  globals.metaData.influxStockMeasurement = 'base';
   globals.metaData.influxApiUrl =
     process.env.INFLUX_API_URL ?? 'http://localhost:8086/api/v2';
-  globals.metaData.defaultPriceKey = process.env.DEFAULT_PRICE_KEY ?? 'price';
+  globals.metaData.defaultPriceKey = 'price';
   globals.metaData.lineprotocolParserPath =
     process.env.LINEPROTOCOL_PARSER_PATH ?? '/home/lineprotocol-parser.js';
   globals.metaData.influxPort = process.env.INFLUX_PORT ?? '8086';
