@@ -4,6 +4,8 @@ COPY script-parser.js /home
 COPY lib /home/lib
 COPY run.sh /home
 COPY watch.sh /home
+COPY dashboard /home
+COPY dashboard-server.js /home
 RUN mkdir /home/license
 COPY LICENSE.txt /home/license
 RUN chmod +x /home/run.sh
