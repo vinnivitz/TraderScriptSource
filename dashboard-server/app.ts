@@ -5,7 +5,7 @@ import fs from 'fs';
 
 const port = 3000;
 
-const root = process.env.DASHBOARD_SRC_PATH as string;
+const root = process.env.DASHBOARD_SRC_PATH as string ?? '/home/dashboard';
 
 app.get('*', (req, res) => {
   fs.stat(path.join(root, req.path), (err) =>
