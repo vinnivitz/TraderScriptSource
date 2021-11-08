@@ -1,6 +1,13 @@
+import { DashboardData } from './models/dashboard-data.model';
 import { CharStreams, CommonTokenStream, ParserRuleContext } from 'antlr4ts';
-import { readFileSync } from 'fs';
-import { ANTLRTree, COMMAND, FLAG } from './models';
+import { readFileSync, writeFileSync } from 'fs';
+import {
+  ANTLRTree,
+  COMMAND,
+  FLAG,
+  INFLUX_ENTITY_TYPE,
+  SCRIPT_TYPE
+} from './models';
 import { InfluxLexer, InfluxParser, CustomInfluxVisitor } from './lib/antlr';
 import {
   authenticate,
@@ -8,7 +15,7 @@ import {
   setupIndicators,
   setupTelegraf
 } from './resources';
-import { executeSequentially, globals } from './utils';
+import { executeSequentially, extractPeriodNumberFromString, globals } from './utils';
 import axios from 'axios';
 
 /**
@@ -23,10 +30,10 @@ async function init(): Promise<void> {
   initMetaData();
 
   // reads script from user
-  const input = readFileSync(globals.metaData.scriptFilePath).toString();
   try {
-    const result = getANTLRTree(input);
-    await execRequests(result);
+    const input = readFileSync(globals.metaData.scriptFilePath).toString();
+    const tree = getANTLRTree(input);
+    await execRequests(tree);
     console.log(`Parsing successfully finished.`);
   } catch (err) {
     console.log(`Parsing failed.\nError: ${err}`);
@@ -40,20 +47,32 @@ async function init(): Promise<void> {
  * @returns {*}  {Promise<void>}
  */
 async function execRequests(tree: ANTLRTree): Promise<void> {
+  const dashboardData: DashboardData = { defs: [] };
   await executeSequentially(tree, async (leaf) => {
     const command = leaf[0];
     const flags = leaf[1];
     switch (command) {
       case COMMAND.AUTH:
         await authenticate(flags);
-        console.log('User authenticated user to InfluxDB.');
+        dashboardData.username = flags.get(FLAG.USERNAME);
+        dashboardData.org = flags.get(FLAG.INFLUX_ORGANIZATION);
+        console.log('User authenticated to InfluxDB.');
         break;
       case COMMAND.CONFIG:
         await setupTelegraf(flags);
+        dashboardData.configName = flags.get(FLAG.NAME);
         console.log('Telegraf is running successfully.');
         break;
       case COMMAND.DEFINITION:
         await setupDefinition(flags);
+        const type = flags.get(FLAG.TYPE);
+        if (type !== SCRIPT_TYPE.ENDPOINT) {
+          dashboardData.defs.push({
+            name: flags.get(FLAG.NAME),
+            type: flags.get(FLAG.TYPE),
+            period: flags.get(FLAG.PERIOD)
+          });
+        }
         console.log(`Setup definition ${flags.get(FLAG.NAME)}.`);
         break;
       case COMMAND.CONDITION:
@@ -67,6 +86,12 @@ async function execRequests(tree: ANTLRTree): Promise<void> {
         break;
     }
   });
+  dashboardData.interval = extractPeriodNumberFromString(globals.metaData.interval);
+  dashboardData.measurement = globals.metaData.influxStockMeasurement;
+  writeFileSync(
+    `${process.env.DASHBOARD_PATH ?? '/home/dashboard'}/assets/config.json`,
+    JSON.stringify(dashboardData)
+  );
 }
 
 /**
@@ -105,16 +130,15 @@ function initAxios(): void {
  */
 function initMetaData(): void {
   globals.metaData.influxOffset = process.env.INFLUX_OFFSET ?? '1s';
-  globals.metaData.influxStockMeasurement =
-    process.env.INFLUX_STOCK_MEASUREMENT ?? 'stock';
+  globals.metaData.influxStockMeasurement = 'base';
   globals.metaData.influxApiUrl =
     process.env.INFLUX_API_URL ?? 'http://localhost:8086/api/v2';
-  globals.metaData.defaultPriceKey = process.env.DEFAULT_PRICE_KEY ?? 'price';
+  globals.metaData.defaultPriceKey = 'price';
   globals.metaData.lineprotocolParserPath =
     process.env.LINEPROTOCOL_PARSER_PATH ?? '/home/lineprotocol-parser.js';
   globals.metaData.influxPort = process.env.INFLUX_PORT ?? '8086';
   globals.metaData.scriptFilePath =
-    process.env.SCRIPT_FILE_PATH ?? '/home/input.txt';
+    process.env.SCRIPT_FILE_PATH ?? '/home/config.txt';
   globals.metaData.libDirPath =
     process.env.SCRIPT_PARSER_LIB_DIR_PATH ?? '/home/lib';
 }

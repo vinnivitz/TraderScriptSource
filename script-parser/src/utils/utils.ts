@@ -56,7 +56,6 @@ export async function createOrReplaceInfluxData<
       `${globals.metaData.influxApiUrl}/${type}/${existing.id}`
     );
   }
-
   return (
     await axios.post(`${globals.metaData.influxApiUrl}/${type}`, requestBody)
   )?.data;

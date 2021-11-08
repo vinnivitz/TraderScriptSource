@@ -1,21 +1,82 @@
 <mat-card>
-  <span class="user">{{username | async}} <button mat-stroked-button (click)="logout()">Logout</button></span>
+  <button mat-stroked-button (click)="logout()">Logout</button>
   <mat-card-header>
     <h1>TraderScript Dashboard</h1>
   </mat-card-header>
   <mat-card-content>
-    <div class="chart-wrapper">
-      <chart [type]="type" [data]="data" [options]="options"></chart>
-      <mat-spinner *ngIf="!showChart"></mat-spinner>
-    </div>
-    <form [formGroup]="form">
+    <mat-divider></mat-divider>
+    <div class="content">
+      <div class="chart-wrapper">
+        <chart type="line" [data]="data | async" [options]="{ animation: { duration: 0 } }"></chart>
+        <mat-spinner *ngIf="(data | async)?.datasets && (data | async).datasets[0]?.data.length === 0"></mat-spinner>
+      </div>
       <div class="menu">
         <mat-form-field>
-          <input type="number" matInput placeholder="Interval in seconds" formControlName="interval">
+          <input type="text" matInput [value]="config.username" placeholder="Username" [disabled]="true">
         </mat-form-field>
-        <mat-checkbox [checked]="showStockPrice">Show stock price</mat-checkbox>
+        <mat-form-field>
+          <input type="text" matInput [value]="config.configName" placeholder="Config name" [disabled]="true">
+        </mat-form-field>
+        <mat-form-field>
+          <input type="number" matInput placeholder="Interval in seconds" [(ngModel)]="config.interval">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Select a time range</mat-label>
+          <mat-select [value]="config.range" (valueChange)="config.range = $event">
+            <mat-option *ngFor="let option of rangeOptions" [value]="option">{{option}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-accordion *ngFor="let def of config.defs">
+          <mat-expansion-panel [expanded]="panel[def.name]">
+            <mat-expansion-panel-header (click)="panel[def.name] = !panel[def.name]">
+              <mat-panel-title>
+                {{def.name}}
+              </mat-panel-title>
+              <mat-panel-description>
+                {{def.type | uppercase}}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-checkbox [checked]="def.show" (change)="toggleCheckbox(def.name)">Show {{def.name}}</mat-checkbox>
+            <mat-form-field>
+              <input matInput [ngxMatColorPicker]="picker" [ngModel]="def.color"
+                (ngModelChange)="updateColor($event, def.name)">
+              <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
+              <ngx-mat-color-picker #picker></ngx-mat-color-picker>
+            </mat-form-field>
+          </mat-expansion-panel>
+        </mat-accordion>
       </div>
-    </form>
+      <div class="subheader">
+        <h2>Notifications</h2>
+      </div>
+      <div *ngIf="(notifications | async).length === 0" class="no-notifications">No notifications found.</div>
+      <table *ngIf="(notifications | async).length > 0" mat-table [dataSource]="notifications | async" class="mat-elevation-z8">
+        <ng-container matColumnDef="number">
+          <th mat-header-cell *matHeaderCellDef> No. </th>
+          <td mat-cell *matCellDef="let element"> {{element.number}} </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Endpoint </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="time">
+          <th mat-header-cell *matHeaderCellDef> Time </th>
+          <td mat-cell *matCellDef="let element"> {{element.time}} </td>
+        </ng-container>
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef> Description </th>
+          <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+        </ng-container>
+        <ng-container matColumnDef="sent">
+          <th mat-header-cell *matHeaderCellDef> Sent </th>
+          <td mat-cell *matCellDef="let element">
+            <mat-icon>{{element.sent ? 'check' : error}}</mat-icon>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="['number', 'name', 'time', 'description', 'sent']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['number', 'name', 'time', 'description', 'sent'];"></tr>
+      </table>
+    </div>
 
   </mat-card-content>
 </mat-card>

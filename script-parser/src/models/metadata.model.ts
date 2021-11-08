@@ -4,7 +4,6 @@ export interface Metadata {
   influxToken?: string;
   org?: string;
   interval?: string;
-  offset?: string;
   influxBucket?: string;
   influxOffset?: string;
   influxStockMeasurement?: string;

@@ -1,15 +1,11 @@
 mat-card {
   position: relative;
 
-  .user {
+  button {
     position: absolute;
     right: 30px;
     top: 20px;
-    font-size: 1.2em;
-
-    button {
-      margin-left: 10px;
-    }
+    font-size: 1em;
   }
 
   mat-card-header {
@@ -17,22 +13,71 @@ mat-card {
     justify-content: center;
   }
 
-  .chart-wrapper {
-    position: relative;
-
-    mat-spinner {
-      position: absolute;
-      left: 50%;
-      top: 30%;
-    }
-  }
-
-  .menu {
-    margin-left: 20px !important;
-  }
-
-  mat-card-content {
+  .content {
+    padding-top: 20px;
     display: grid;
-    grid-template-columns: 75% 25%;
+    grid-template-columns: 10% 15% 25% 25% 15% 10%;
+
+    .chart-wrapper {
+      position: relative;
+      grid-row: 1;
+      grid-column-start: 1;
+      grid-column-end: 5;
+
+      mat-spinner {
+        position: absolute;
+        left: 50%;
+        top: 30%;
+      }
+    }
+
+    .menu {
+      margin-left: 20px !important;
+      grid-row: 1;
+      grid-column-start: 5;
+      grid-column-end: 7;
+
+      mat-form-field {
+        width: 100%;
+      }
+
+      mat-expansion-panel {
+        margin-bottom: 10px;
+
+        mat-panel-title,
+        mat-panel-description {
+          font-size: 14px !important;
+        }
+
+        mat-checkbox {
+          font-size: 12px;
+        }
+
+        mat-form-field {
+          width: 90%;
+        }
+      }
+    }
+
+    .subheader {
+      margin-top: 20px;
+      grid-row: 2;
+      grid-column-start: 3;
+      grid-column-end: 5;
+      text-align: center;
+    }
+    .no-notifications {
+      grid-row: 3;
+      grid-column-start: 2;
+      grid-column-end: 6;
+      text-align: center;
+      font-style: italic;
+    }
+
+    table {
+      grid-row: 3;
+      grid-column-start: 2;
+      grid-column-end: 6;
+    }
   }
 }

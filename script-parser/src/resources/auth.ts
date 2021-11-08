@@ -1,6 +1,9 @@
-import { Authorization, FLAG } from '../models';
+import { INFLUX_BUCKET_TYPE } from './../models/influx-bucket-type.enum';
+import { InfluxBucket } from './../models/influx-bucket.model';
+import { Authorization, FLAG, INFLUX_ENTITY_TYPE } from '../models';
 import axios from 'axios';
-import { globals } from '../utils';
+import { executeSequentially, globals } from '../utils';
+import { InfluxEntity } from '../models/influx-entity.model';
 
 /**
  * Executes authentication process.
@@ -19,6 +22,7 @@ export async function authenticate(flags: Map<string, string>): Promise<void> {
   const cookie = await signin(username, password);
   axios.defaults.headers.common = { Cookie: cookie };
   await updateMetaData(organization);
+  await cleanupInflux();
 }
 
 /**
@@ -58,4 +62,29 @@ async function updateMetaData(organization: string): Promise<void> {
   globals.metaData.orgID = authorization.orgID;
   globals.metaData.influxToken = authorization.token;
   globals.metaData.org = authorization.org;
+}
+
+/**
+ * Removes all configurations, buckets, tasks and alert related entries from InfluxDB
+ * to avoid complications with new inserted entries.
+ *
+ * @async
+ * @returns {*}  {Promise<void>}
+ */
+async function cleanupInflux(): Promise<void> {
+  const entities = Object.values(INFLUX_ENTITY_TYPE);
+  await executeSequentially(entities, async (entity) => {
+    const list: InfluxEntity[] = (
+      await axios.get(`${globals.metaData.influxApiUrl}/${entity}`, {
+        params: { orgID: globals.metaData.orgID }
+      })
+    ).data[entity === INFLUX_ENTITY_TYPE.TELEGRAFS ? 'configurations' : entity];
+    await executeSequentially(list, async (item) => {
+      if ((item as InfluxBucket)?.type !== INFLUX_BUCKET_TYPE.SYSTEM) {
+        await axios.delete(
+          `${globals.metaData.influxApiUrl}/${entity}/${item.id}`
+        );
+      }
+    });
+  });
 }

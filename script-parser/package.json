@@ -4,7 +4,7 @@
   "description": "Program to setup InfluxDB via config script for day trading.",
   "main": "app.ts",
   "scripts": {
-    "start": "INFLUX_DOCKER=false LINEPROTOCOL_PARSER_PATH=/home/vinni/Documents/bachelorarbeit/source/TraderScriptSource/public/data/lineprotocol-parser.js SCRIPT_FILE_PATH=/home/vinni/Documents/bachelorarbeit/source/TraderScriptSource/dev/input.txt SCRIPT_PARSER_LIB_DIR_PATH=/home/vinni/Documents/bachelorarbeit/source/TraderScriptSource/script-parser/src/lib ts-node src/app.ts",
+    "start": "export $(grep -v '^#' .env | xargs) && ts-node src/app.ts",
     "build": "mkdir -p ./dist && webpack && minify dist/bundle.js > dist/script-parser.js && rm dist/bundle.js && mkdir -p ./dist/lib/telegraf && mkdir -p ./dist/lib/flux-scripts && cp -r ./src/lib/telegraf/telegraf.conf ./dist/lib/telegraf && cp -r ./src/lib/flux-scripts ./dist/lib"
   },
   "repository": {

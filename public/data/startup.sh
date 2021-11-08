@@ -32,8 +32,8 @@ read -p "Please input the path of the directory where InfluxDB data will be pers
 influx_data=${influx_data:-"$HOME/.influxdata"}
 clear
 
-read -p "Please input the the path of your script file. [$HOME/input.txt]:" script_file_path
-script_file_path="${script_file_path:-$HOME/"input.txt"}/"
+read -p "Please input the the path of your script file. [$HOME/config.txt]:" script_file_path
+script_file_path="${script_file_path:-$HOME/"config.txt"}/"
 clear
 
 read -p "Please input the local trading coach dashboard web ui port [4200]:" dashboard_port
@@ -86,4 +86,4 @@ remove_running_container
 
 echo "Starting program..."
 
-docker run -p $influx_port:8086 -p $dashboard_port:4200 -v $influx_data:/root/.influxdbv2 -v $script_file_path:/home/input.txt --name $docker_container --add-host host.docker.internal:host-gateway $docker_image /home/run.sh
+docker run -e INFLUX_DOCKER=true -p $influx_port:8086 -p $dashboard_port:3000 -v $influx_data:/root/.influxdbv2 -v $script_file_path:/home/config.txt --name $docker_container --add-host host.docker.internal:host-gateway $docker_image /home/run.sh

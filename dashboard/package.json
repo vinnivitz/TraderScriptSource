@@ -9,6 +9,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
+    "@angular-material-components/color-picker": "^6.0.0",
     "@angular/animations": "~11.2.9",
     "@angular/cdk": "^11.2.13",
     "@angular/common": "~11.2.9",
@@ -25,7 +26,7 @@
     "@types/chart.js": "^2.9.34",
     "angular2-chartjs": "^0.5.1",
     "chart.js": "^3.6.0",
-    "momentjs": "^2.0.0",
+    "ngx-color-picker": "^11.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"
