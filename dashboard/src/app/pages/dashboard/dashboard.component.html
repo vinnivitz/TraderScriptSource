@@ -1,21 +1,56 @@
 <mat-card>
-  <span class="user">{{username | async}} <button mat-stroked-button (click)="logout()">Logout</button></span>
+  <button mat-stroked-button (click)="logout()">Logout</button>
   <mat-card-header>
     <h1>TraderScript Dashboard</h1>
   </mat-card-header>
   <mat-card-content>
-    <div class="chart-wrapper">
-      <chart [type]="type" [data]="data" [options]="options"></chart>
-      <mat-spinner *ngIf="!showChart"></mat-spinner>
-    </div>
-    <form [formGroup]="form">
+    <mat-divider></mat-divider>
+    <div class="content">
+      <div class="chart-wrapper">
+        <chart type="line" [data]="data | async" [options]="{ animation: { duration: 0 } }"></chart>
+        <mat-spinner *ngIf="!(data | async)"></mat-spinner>
+      </div>
       <div class="menu">
         <mat-form-field>
-          <input type="number" matInput placeholder="Interval in seconds" formControlName="interval">
+          <input type="text" matInput [value]="config.username" placeholder="Username" [disabled]="true">
         </mat-form-field>
-        <mat-checkbox [checked]="showStockPrice">Show stock price</mat-checkbox>
+        <mat-form-field>
+          <input type="text" matInput [value]="config.configName" placeholder="Config name" [disabled]="true">
+        </mat-form-field>
+        <mat-form-field>
+          <input type="number" matInput placeholder="Interval in seconds" [(ngModel)]="interval">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Select a time range</mat-label>
+          <mat-select [value]="config.range" (valueChange)="setRange($event)">
+            <mat-option value="1m">1min</mat-option>
+            <mat-option value="5m">5min</mat-option>
+            <mat-option value="15m">15min</mat-option>
+            <mat-option value="1h">1h</mat-option>
+            <mat-option value="3h">3h</mat-option>
+            <mat-option value="6h">6h</mat-option>
+            <mat-option value="12h">12h</mat-option>
+            <mat-option value="24h">24h</mat-option>
+            <mat-option value="2d">2d</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-accordion *ngFor="let def of config.defs">
+          <mat-expansion-panel [expanded]="panel[def.name]">
+            <mat-expansion-panel-header (click)="panel[def.name] = !panel[def.name]">
+              <mat-panel-title>
+                {{def.name}}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-checkbox [checked]="def.show" (change)="toggleCheckbox(def.name)">Show {{def.name}}</mat-checkbox>
+            <mat-form-field>
+              <input matInput [ngxMatColorPicker]="picker" [ngModel]="def.color"
+                (ngModelChange)="updateColor($event, def.name)">
+              <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
+              <ngx-mat-color-picker #picker></ngx-mat-color-picker>
+            </mat-form-field>
+          </mat-expansion-panel>
+        </mat-accordion>
       </div>
-    </form>
-
+    </div>
   </mat-card-content>
 </mat-card>

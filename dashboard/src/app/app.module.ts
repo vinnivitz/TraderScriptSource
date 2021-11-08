@@ -11,6 +11,7 @@ import { AuthState } from './states/auth.state';
 import { environment } from 'src/environments/environment';
 import { NgxsEmitPluginModule } from '@ngxs-labs/emitter';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
+import { ChartState } from './states/chart.state';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,7 +23,7 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
     NgxsModule.forRoot([AuthState], {
       developmentMode: !environment.production
     }),
-    NgxsStoragePluginModule.forRoot({ key: AuthState }),
+    NgxsStoragePluginModule.forRoot({ key: [AuthState, ChartState] }),
     NgxsEmitPluginModule.forRoot()
   ],
   providers: [

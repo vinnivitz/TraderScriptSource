@@ -4,17 +4,7 @@
     <form [formGroup]="form" (ngSubmit)="submit()">
       <p>
         <mat-form-field>
-          <input type="text" matInput placeholder="InfluxDB Organization" formControlName="org">
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field>
           <input type="text" matInput placeholder="InfluxDB Token" formControlName="token">
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field>
-          <input type="text" matInput placeholder="InfluxDB Config Name" formControlName="config">
         </mat-form-field>
       </p>
       <div class="button">

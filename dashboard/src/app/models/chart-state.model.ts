@@ -1,3 +1,6 @@
+import { ChartData } from 'chart.js';
+import { InfluxConfig } from './influx-config.model';
 export interface ChartStateModel {
-  stock?: any[];
+  data?: ChartData;
+  config?: InfluxConfig;
 }

@@ -1,3 +1,4 @@
+import { MatDividerModule } from '@angular/material/divider';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,7 +13,14 @@ import { NgxsModule } from '@ngxs/store';
 import { ChartModule } from 'angular2-chartjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatGridListModule } from '@angular/material/grid-list';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import {
+  MAT_COLOR_FORMATS,
+  NgxMatColorPickerModule,
+  NGX_MAT_COLOR_FORMATS
+} from '@angular-material-components/color-picker';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSelectModule } from '@angular/material/select';
 
 const routes: Routes = [{ path: '', component: DashboardComponent }];
 
@@ -30,7 +38,12 @@ const routes: Routes = [{ path: '', component: DashboardComponent }];
     MatInputModule,
     MatCheckboxModule,
     FormsModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+    NgxMatColorPickerModule,
+    MatExpansionModule,
+    MatSelectModule,
+    MatDividerModule
+  ],
+  providers: [{ provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS }]
 })
 export class DashboardModule {}
