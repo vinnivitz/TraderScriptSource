@@ -86,4 +86,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.config = { ...this.config };
     this.config.range = range;
   }
+
+  setInterval(interval: number): void {
+    this.config = { ...this.config };
+    this.config.interval = interval;
+  }
 }

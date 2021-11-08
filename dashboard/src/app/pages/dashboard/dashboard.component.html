@@ -18,11 +18,11 @@
           <input type="text" matInput [value]="config.configName" placeholder="Config name" [disabled]="true">
         </mat-form-field>
         <mat-form-field>
-          <input type="number" matInput placeholder="Interval in seconds" [(ngModel)]="config.interval">
+          <input type="number" matInput placeholder="Interval in seconds" [ngModel]="config.interval" (ngModelChange)="setInterval($event)">
         </mat-form-field>
         <mat-form-field>
           <mat-label>Select a time range</mat-label>
-          <mat-select [value]="config.range" (valueChange)="config.range = $event">
+          <mat-select [value]="config.range" (valueChange)="setRange($event)">
             <mat-option *ngFor="let option of rangeOptions" [value]="option">{{option}}</mat-option>
           </mat-select>
         </mat-form-field>
@@ -49,8 +49,8 @@
       <div class="subheader">
         <h2>Notifications</h2>
       </div>
-      <div *ngIf="(notifications | async).length === 0" class="no-notifications">No notifications found.</div>
-      <table *ngIf="(notifications | async).length > 0" mat-table [dataSource]="notifications | async" class="mat-elevation-z8">
+      <div *ngIf="(notifications | async)?.length === 0" class="no-notifications">No notifications found.</div>
+      <table *ngIf="(notifications | async)?.length > 0" mat-table [dataSource]="notifications | async" class="mat-elevation-z8">
         <ng-container matColumnDef="number">
           <th mat-header-cell *matHeaderCellDef> No. </th>
           <td mat-cell *matCellDef="let element"> {{element.number}} </td>
