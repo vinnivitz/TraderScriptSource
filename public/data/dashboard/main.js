@@ -200,9 +200,6 @@ let ChartState = ChartState_1 = class ChartState {
             return data;
         }));
     }
-    static onLogout(ctx) {
-        ctx.setState(DEFAULT_STATE);
-    }
     static csvJSON(csv) {
         const lines = csv.split('\n');
         const result = [];
@@ -251,9 +248,6 @@ Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_ngxs_labs_emitter__WEBPACK_IMPORTED_MODULE_5__["Receiver"])()
 ], ChartState, "onFetchData", null);
-Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_ngxs_labs_emitter__WEBPACK_IMPORTED_MODULE_5__["Receiver"])()
-], ChartState, "onLogout", null);
 ChartState = ChartState_1 = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_ngxs_store__WEBPACK_IMPORTED_MODULE_3__["State"])({
         name: AUTH_STATE_TOKEN,
