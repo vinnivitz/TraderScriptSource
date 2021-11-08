@@ -15,7 +15,7 @@ import {
   setupIndicators,
   setupTelegraf
 } from './resources';
-import { executeSequentially, globals } from './utils';
+import { executeSequentially, extractPeriodNumberFromString, globals } from './utils';
 import axios from 'axios';
 
 /**
@@ -86,6 +86,8 @@ async function execRequests(tree: ANTLRTree): Promise<void> {
         break;
     }
   });
+  dashboardData.interval = extractPeriodNumberFromString(globals.metaData.interval);
+  dashboardData.measurement = globals.metaData.influxStockMeasurement;
   writeFileSync(
     `${process.env.DASHBOARD_PATH}/assets/config.json`,
     JSON.stringify(dashboardData)

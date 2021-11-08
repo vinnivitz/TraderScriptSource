@@ -6,4 +6,6 @@ export interface DashboardData {
   org?: string;
   configName?: string;
   defs?: { name: string; type: string; period: string }[];
+  interval?: number;
+  measurement?: string;
 }
