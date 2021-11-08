@@ -7,4 +7,6 @@ export interface InfluxConfig {
   org?: string;
   defs?: { type: INFLUX_FILTER_TYPE; name: string; period?: string, color?: Color, rgbColor?: string, show: boolean }[];
   range?: string;
+  interval?: number;
+  measurement?: string;
 }

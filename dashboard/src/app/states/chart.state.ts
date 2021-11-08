@@ -47,7 +47,7 @@ export class ChartState {
         await this.resource
           .fetchData(
             config.org,
-            `${query}\n|>filter(fn: (r) => r._measurement == \"base\")`
+            `${query}\n|>filter(fn: (r) => r._measurement == \"${config.measurement}\")`
           )
           .toPromise()
       );
@@ -57,13 +57,13 @@ export class ChartState {
         if (def.show) {
           switch (def.type) {
             case INFLUX_FILTER_TYPE.STOCK:
-              query = `${query}\n|>filter(fn: (r) => r._measurement == \"base\")`;
+              query = `${query}\n|>filter(fn: (r) => r._measurement == \"${config.measurement}\")`;
               break;
             case INFLUX_FILTER_TYPE.EMA:
-              query = `${query}\n|>filter(fn: (r) => r._measurement == \"base\")\n|>exponentialMovingAverage(n: ${def.period})`;
+              query = `${query}\n|>filter(fn: (r) => r._measurement == \"${config.measurement}\")\n|>exponentialMovingAverage(n: ${def.period})`;
               break;
             case INFLUX_FILTER_TYPE.RSI:
-              query = `${query}\n|>filter(fn: (r) => r._measurement == \"base\")\n|>relativeStrengthIndex(n: ${def.period})`;
+              query = `${query}\n|>filter(fn: (r) => r._measurement == \"${config.measurement}\")\n|>relativeStrengthIndex(n: ${def.period})`;
               break;
             case INFLUX_FILTER_TYPE.MACD:
               query = `${query}\n|>filter(fn: (r) => r._measurement == \"macd\" and r._field == \"${def.name}\")`;

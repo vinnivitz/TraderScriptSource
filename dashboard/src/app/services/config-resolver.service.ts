@@ -35,7 +35,7 @@ export class ConfigResolverService implements Resolve<InfluxConfig> {
           show: storedDef?.show ?? true
         };
       });
-      console.log(storedConfig);
+      config.interval = storedConfig?.interval ?? 5;
       config.range = storedConfig?.range ?? '5m';
       return config;
     });

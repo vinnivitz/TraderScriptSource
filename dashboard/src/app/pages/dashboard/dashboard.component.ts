@@ -20,8 +20,20 @@ export class DashboardComponent implements OnInit {
   config: InfluxConfig;
   type = 'line';
   options = { animation: { duration: 1 } };
-  interval = 5;
   panel: { name: string; expanded: boolean }[];
+  rangeOptions = [
+    '1m',
+    '2m',
+    '5m',
+    '10m',
+    '30m',
+    '1h',
+    '2h',
+    '5h',
+    '10h',
+    '1d',
+    '2d'
+  ];
 
   @Select(ChartState.data) data: Observable<ChartData>;
 
@@ -35,8 +47,7 @@ export class DashboardComponent implements OnInit {
     this.panel = this.config.defs.map((def) => {
       return { name: def.name, expanded: false };
     });
-    setInterval(() => this.onFetchData.emit(this.config), this.interval * 1000);
-    this.data.subscribe((x) => console.log(x));
+    setInterval(() => this.onFetchData.emit(this.config), this.config.interval * 1000);
   }
 
   ngOnInit(): void {}
