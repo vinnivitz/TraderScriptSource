@@ -1,6 +1,6 @@
 auth: my_org with username max_mustermann and password geheim123
-config: my_config with url http://example.com and pricekey path.to.key
-def: def_1 of type ema with period 50
-def: def_2 of type rsi with period 30
-def: my_endpoint of type endpoint with url http://example.com
+config: my_config with url http://localhost:3001 and pricekey openPrice.bid
+def: def_1 of type ema with period 5
+def: def_2 of type rsi with period 3
+def: my_endpoint of type endpoint with url http://localhost:3001/test1
 if def_1 > def_2 then my_endpoint
