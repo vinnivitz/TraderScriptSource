@@ -21,6 +21,8 @@ import {
 } from '@angular-material-components/color-picker';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
 
 const routes: Routes = [{ path: '', component: DashboardComponent }];
 
@@ -42,7 +44,9 @@ const routes: Routes = [{ path: '', component: DashboardComponent }];
     NgxMatColorPickerModule,
     MatExpansionModule,
     MatSelectModule,
-    MatDividerModule
+    MatDividerModule,
+    MatTableModule,
+    MatIconModule
   ],
   providers: [{ provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS }]
 })

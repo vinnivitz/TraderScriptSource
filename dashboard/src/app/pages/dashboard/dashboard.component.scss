@@ -16,10 +16,13 @@ mat-card {
   .content {
     padding-top: 20px;
     display: grid;
-    grid-template-columns: 75% 25%;
+    grid-template-columns: 10% 15% 25% 25% 15% 10%;
 
     .chart-wrapper {
       position: relative;
+      grid-row: 1;
+      grid-column-start: 1;
+      grid-column-end: 5;
 
       mat-spinner {
         position: absolute;
@@ -30,11 +33,15 @@ mat-card {
 
     .menu {
       margin-left: 20px !important;
+      grid-row: 1;
+      grid-column-start: 5;
+      grid-column-end: 7;
 
       mat-expansion-panel {
         margin-bottom: 10px;
 
-        mat-panel-title, mat-panel-description {
+        mat-panel-title,
+        mat-panel-description {
           font-size: 14px !important;
         }
 
@@ -46,6 +53,18 @@ mat-card {
           width: 90%;
         }
       }
+    }
+
+    .subheader {
+      grid-row: 2;
+      grid-column-start: 3;
+      grid-column-end: 5;
+      text-align: center;
+    }
+    table {
+      grid-row: 3;
+      grid-column-start: 2;
+      grid-column-end: 6;
     }
   }
 }

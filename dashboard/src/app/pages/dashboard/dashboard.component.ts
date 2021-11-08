@@ -1,3 +1,4 @@
+import { DashboardNotification } from './../../models/dashboard-notification.model';
 import { ChartState } from './../../states/chart.state';
 import { Emittable, Emitter } from '@ngxs-labs/emitter';
 import { AuthState } from './../../states/auth.state';
@@ -36,6 +37,7 @@ export class DashboardComponent implements OnInit {
   ];
 
   @Select(ChartState.data) data: Observable<ChartData>;
+  @Select(ChartState.notifications) notifications: Observable<DashboardNotification>;
 
   @Emitter(ChartState.onFetchData) onFetchData: Emittable<any>;
   @Emitter(AuthState.onLogout) onLogout: Emittable<void>;

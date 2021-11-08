@@ -106,7 +106,9 @@ async function createCheck(flags: Map<string, string>): Promise<void> {
       orgID: globals.metaData.orgID,
       query: { text: script },
       every: globals.metaData.interval,
-      offset: `${extractPeriodNumberFromString(globals.metaData.influxOffset) + 1}s`,
+      offset: `${
+        extractPeriodNumberFromString(globals.metaData.influxOffset) + 1
+      }s`,
       status: INFLUX_STATUS.ACTIVE,
       statusMessageTemplate: `${flags.get(FLAG.INDICATOR1)} ${flags.get(
         FLAG.LOGICAL_OPERATOR
@@ -122,7 +124,9 @@ async function createCheck(flags: Map<string, string>): Promise<void> {
         }
       ],
       type: INFLUX_CHECK_TYPE.THRESHOLD,
-      tags: [{ key: 'check_type', value: flags.get(FLAG.ENDPOINT) }]
+      tags: [
+        { key: 'check_type', value: flags.get(FLAG.ENDPOINT) }
+      ]
     }
   );
 }

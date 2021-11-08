@@ -9,7 +9,7 @@ export class ChartService {
 
   constructor(private http: HttpClient, private store: Store) {}
 
-  public fetchData(org: string, query: string): Observable<any> {
+  fetchData(org: string, query: string): Observable<any> {
     return this.http.post(
       `${this.BASE_URL}/query`,
       { query },
