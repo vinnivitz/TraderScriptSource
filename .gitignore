@@ -21,3 +21,6 @@ dist
 
 # dev
 dev
+
+# dashboard config
+dashboard/src/assets/config.json
