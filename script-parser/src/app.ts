@@ -89,7 +89,7 @@ async function execRequests(tree: ANTLRTree): Promise<void> {
   dashboardData.interval = extractPeriodNumberFromString(globals.metaData.interval);
   dashboardData.measurement = globals.metaData.influxStockMeasurement;
   writeFileSync(
-    `${process.env.DASHBOARD_PATH}/assets/config.json`,
+    `${process.env.DASHBOARD_PATH ?? '/home/dashboard'}/assets/config.json`,
     JSON.stringify(dashboardData)
   );
 }

@@ -68,7 +68,6 @@ export class ChartState {
           )
           .toPromise()
       );
-      console.log(notifications);
       const dashboardNotifications: DashboardNotification[] = notifications
         .slice(0, notifications.length - 2)
         .map((notification, i) => ({

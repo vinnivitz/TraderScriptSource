@@ -1,22 +1,27 @@
+import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import {
   HttpInterceptor,
   HttpEvent,
   HttpHandler,
-  HttpErrorResponse,
-  HttpResponse
+  HttpErrorResponse
 } from '@angular/common/http';
 import { HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthState } from '../states/auth.state';
-import { map } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InterceptorService implements HttpInterceptor {
-  constructor(private store: Store) {}
+  constructor(
+    private store: Store,
+    private router: Router,
+    private ngZone: NgZone
+  ) {}
 
   intercept(
     req: HttpRequest<any>,
@@ -26,6 +31,11 @@ export class InterceptorService implements HttpInterceptor {
     const tokenizedReq = req.clone({
       headers: req.headers.set('Authorization', `Token ${token}`)
     });
-    return next.handle(tokenizedReq)
+    return next.handle(tokenizedReq).pipe(
+      catchError((error: HttpErrorResponse) => {
+        this.ngZone.run(() => this.router.navigateByUrl('login'));
+        return throwError(error);
+      })
+    );
   }
 }

@@ -86,4 +86,4 @@ remove_running_container
 
 echo "Starting program..."
 
-docker run -p $influx_port:8086 -p $dashboard_port:4200 -v $influx_data:/root/.influxdbv2 -v $script_file_path:/home/config.txt --name $docker_container --add-host host.docker.internal:host-gateway $docker_image /home/run.sh
+docker run -e INFLUX_DOCKER=true -p $influx_port:8086 -p $dashboard_port:3000 -v $influx_data:/root/.influxdbv2 -v $script_file_path:/home/config.txt --name $docker_container --add-host host.docker.internal:host-gateway $docker_image /home/run.sh

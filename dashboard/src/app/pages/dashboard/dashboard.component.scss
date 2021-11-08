@@ -65,6 +65,14 @@ mat-card {
       grid-column-end: 5;
       text-align: center;
     }
+    .no-notifications {
+      grid-row: 3;
+      grid-column-start: 2;
+      grid-column-end: 6;
+      text-align: center;
+      font-style: italic;
+    }
+
     table {
       grid-row: 3;
       grid-column-start: 2;
