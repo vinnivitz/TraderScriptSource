@@ -9,6 +9,7 @@ if [ -f "$FILE" ]; then
             killall node -q
             killall telegraf -q
             node /home/script-parser.js &
+            node /home/dashboard-server.js &
         fi
         sleep 1
     done
