@@ -22,17 +22,13 @@ export async function executeSequentially<T>(
 }
 
 /**
- * Fetches a list of influx entity from given `type` and searches for existing match. In case deletes entity, creates a new one
- * and returns the new entity.
+ * Creates a new InfluxDb entitiy of given `type` and returns it.
  *
  * @export
  * @async
  * @template T
  * @param {INFLUX_ENTITY_TYPE} type entity type like bucket, task, etc.
- * @param {string} name name of entity to search for a match
  * @param {object} requestBody data of new influx entity
- * @param {string} [dataKey] optional if data key differs from type name
- * @param {object} [params] optional query params for request
  * @return {*}  {Promise<T>}
  */
 export async function createInfluxData<
