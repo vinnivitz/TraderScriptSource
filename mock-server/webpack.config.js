@@ -1,3 +1,5 @@
+nodeExternals = require('webpack-node-externals');
+
 module.exports = {
   mode: 'production',
   devtool: 'inline-source-map',
@@ -11,5 +13,6 @@ module.exports = {
   module: {
     rules: [{ test: /\.tsx?$/, loader: 'ts-loader' }]
   },
-  target: 'node'
+  target: 'node',
+  externals: [nodeExternals()]
 };

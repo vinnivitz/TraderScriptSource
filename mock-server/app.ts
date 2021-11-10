@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { readFileSync } from 'fs';
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.MOCK_SERVER_PORT  ?? 3001;
 
 let request_counter = 0;
 
