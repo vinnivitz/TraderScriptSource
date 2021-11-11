@@ -19,7 +19,8 @@ import {
   UsernameContext,
   OrganizationContext,
   RequestMethodContext,
-  RequestParamsContext
+  RequestParamsContext,
+  IntervalContext
 } from './InfluxParser';
 import { ANTLRItem, ANTLRParserItem } from '../../models';
 import * as base64 from 'base-64';
@@ -141,6 +142,10 @@ export class CustomInfluxVisitor
 
   visitEma2(ctx: Ema2Context): Map<string, string> {
     return new Map().set('ema2', ctx.LITERALS().text);
+  }
+
+  visitInterval(ctx: IntervalContext): Map<string, string> {
+    return new Map().set('interval', `${ctx.LITERALS().text}s`)
   }
 
   aggregateResult(
