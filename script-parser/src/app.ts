@@ -1,5 +1,9 @@
 import { DashboardData } from './models/dashboard-data.model';
-import { CharStreams, CommonTokenStream, ParserRuleContext } from 'antlr4ts';
+import {
+  CharStreams,
+  CommonTokenStream,
+  ParserRuleContext,
+} from 'antlr4ts';
 import { readFileSync, writeFileSync } from 'fs';
 import { ANTLRTree, COMMAND, FLAG, SCRIPT_TYPE } from './models';
 import { InfluxLexer, InfluxParser, CustomInfluxVisitor } from './lib/antlr';
@@ -101,6 +105,11 @@ function getANTLRTree(input: string): ANTLRTree {
   const lexer = new InfluxLexer(chars);
   const tokens = new CommonTokenStream(lexer);
   const parser = new InfluxParser(tokens);
+  parser.addErrorListener({
+    syntaxError() {
+      throw 'Syntax error in config script.';
+    }
+  });
   const visitor = new CustomInfluxVisitor();
   const tree: ParserRuleContext = parser.influx();
   return visitor.visit(tree);

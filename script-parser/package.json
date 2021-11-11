@@ -5,6 +5,7 @@
   "main": "app.ts",
   "scripts": {
     "start": "export $(grep -v '^#' .env | xargs) && ts-node src/app.ts",
+    "compile-antlr": "antlr4ts -visitor -no-listener ./src/lib/antlr/Influx.g4",
     "build": "mkdir -p ./dist && webpack && minify dist/bundle.js > dist/script-parser.js && rm dist/bundle.js && mkdir -p ./dist/lib/telegraf && mkdir -p ./dist/lib/flux-scripts && cp -r ./src/lib/telegraf/telegraf.conf ./dist/lib/telegraf && cp -r ./src/lib/flux-scripts ./dist/lib"
   },
   "repository": {
