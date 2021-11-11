@@ -10,19 +10,14 @@ line: command NEWLINE;
 
 command: (auth | config | definition | condition);
 
-auth: ('auth:' | 'AUTH:') WHITESPACE organization WHITESPACE (
-		'with'
-		| 'WITH'
-	) WHITESPACE (username | password) WHITESPACE ('and' | 'AND') WHITESPACE (
+auth:
+	AUTH WHITESPACE organization WHITESPACE WITH WHITESPACE (
 		username
 		| password
-	);
+	) WHITESPACE AND WHITESPACE (username | password);
 
 config:
-	('config:' | 'CONFIG:') WHITESPACE name WHITESPACE (
-		'with'
-		| 'WITH'
-	) WHITESPACE (
+	CONFIG WHITESPACE name WHITESPACE WITH WHITESPACE (
 		url
 		| interval
 		| description
@@ -32,7 +27,7 @@ config:
 		| requestBasicAuth
 		| requestParams
 	) (
-		WHITESPACE ('and' | 'AND') WHITESPACE (
+		WHITESPACE AND WHITESPACE (
 			url
 			| interval
 			| description
@@ -45,72 +40,56 @@ config:
 	)*;
 
 definition:
-	('def:' | 'DEF:') WHITESPACE name WHITESPACE ('of' | 'OF') WHITESPACE (
-		'type'
-		| 'TYPE'
-	) WHITESPACE defType (
-		WHITESPACE ('with' | 'WITH') (
+	DEF WHITESPACE name WHITESPACE OF WHITESPACE TYPE WHITESPACE defType (
+		WHITESPACE WITH (
 			WHITESPACE (
 				period
 				| url
-				| (ema1 WHITESPACE ('and' | 'AND') WHITESPACE ema2)
+				| (ema1 WHITESPACE AND WHITESPACE ema2)
 			)
 		)+
 	)?;
 
 condition:
-	('if' | 'IF') WHITESPACE LITERALS WHITESPACE OPERATOR WHITESPACE LITERALS WHITESPACE (
-		'then'
-		| 'THEN'
-	) WHITESPACE LITERALS;
+	IF WHITESPACE LITERALS WHITESPACE OPERATOR WHITESPACE LITERALS WHITESPACE THEN WHITESPACE
+		LITERALS;
 
-defType: (
-		| ('ema' | 'EMA')
-		| ('rsi' | 'RSI')
-		| ('macd' | 'MACD')
-		| ('endpoint' | 'ENDPOINT')
-	);
+defType: ( | EMA | RSI | MACD | ENDPOINT);
 
 organization: LITERALS;
 
-username: ('username' | 'USERNAME') WHITESPACE LITERALS;
+username: USERNAME WHITESPACE LITERALS;
 
-password: ('password' | 'PASSWORD') WHITESPACE LITERALS;
+password: PASSWORD WHITESPACE LITERALS;
 
 name: LITERALS;
 
-period: ('period' | 'PERIOD') WHITESPACE LITERALS;
+period: PERIOD WHITESPACE LITERALS;
 
-url: ('url' | 'URL') WHITESPACE URL_STRING;
+url: URL WHITESPACE URL_STRING;
 
 ema1: LITERALS;
 
 ema2: LITERALS;
 
-interval: ('interval' | 'INTERVAL') WHITESPACE LITERALS;
+interval: INTERVAL WHITESPACE LITERALS;
 
-description:
-	('description' | 'DESCRIPTION') WHITESPACE QUOTE (
-		LITERALS
-		| WHITESPACE
-		| '.'
-	)* QUOTE;
+description: DESCRIPTION WHITESPACE TEXT;
 
-pricekey: ('pricekey' | 'PRICEKEY') WHITESPACE LITERALS (
-		'.' LITERALS
-	)*;
+pricekey: PRICEKEY WHITESPACE LITERALS ( '.' LITERALS)*;
 
-requestMethod: ('method' | 'METHOD') WHITESPACE REQUESTMETHOD;
+requestMethod: METHOD WHITESPACE REQUESTMETHOD;
 
 requestHeaders:
-	('headers' | 'HEADERS') WHITESPACE (
-		(LITERALS ':' LITERALS) (',' LITERALS ':' LITERALS)*
+	HEADERS WHITESPACE (
+		(LITERALS ':' TEXT) (',' LITERALS ':' TEXT)*
 	);
 
-requestBasicAuth: ('basicauth' | 'BASICAUTH') WHITESPACE LITERALS ':' LITERALS;
+requestBasicAuth: BASICAUTH WHITESPACE LITERALS ':' LITERALS;
 
-requestParams: ('params' | 'PARAMS') WHITESPACE (
-		(LITERALS ':' LITERALS) (',' LITERALS ':' LITERALS)*
+requestParams:
+	PARAMS WHITESPACE (
+		(LITERALS ':' TEXT) (',' LITERALS ':' TEXT)*
 	);
 
 /*
@@ -147,6 +126,31 @@ fragment Z: ('Z' | 'z');
 fragment LOWERCASE: [a-z];
 fragment UPPERCASE: [A-Z];
 
+AUTH: A U T H ':';
+CONFIG: C O N F I G ':';
+DEF: D E F ':';
+IF: I F;
+WITH: W I T H;
+AND: A N D;
+OF: O F;
+THEN: T H E N;
+TYPE: T Y P E;
+EMA: E M A;
+RSI: R S I;
+MACD: M A C D;
+ENDPOINT: E N D P O I N T;
+USERNAME: U S E R N A M E;
+PASSWORD: P A S S W O R D;
+URL: U R L;
+PERIOD: P E R I O D;
+INTERVAL: I N T E R V A L;
+DESCRIPTION: D E S C R I P T I O N;
+PRICEKEY: P R I C E K E Y;
+METHOD: M E T H O D;
+HEADERS: H E A D E R S;
+BASICAUTH: B A S I C A U T H;
+PARAMS: P A R A M S;
+
 OPERATOR: ('>' | '<');
 
 URL_STRING: ('http' ('s')? '://') ('www.')? (
@@ -155,9 +159,12 @@ URL_STRING: ('http' ('s')? '://') ('www.')? (
 			| ([a-z] [a-z] [a-z])
 		)
 		| 'localhost'
-	) (':' LITERALS)? ('/' | ('/' ([-a-zA-Z0-9@:%._+~#])+))?;
+		| '127.0.0.1'
+	) (':' LITERALS)? ('/' | ('/' LITERALS+))?;
 
 REQUESTMETHOD: ( 'GET' | 'POST' | 'get' | 'post');
+
+TEXT: QUOTE ( LITERALS | WHITESPACE | '.')* QUOTE;
 
 LITERALS: ([-a-zA-Z0-9@%_+~#?!])+;
 
@@ -167,23 +174,3 @@ NEWLINE: ('\r'? '\n' | '\r')+;
 
 QUOTE: ('"' | '\'');
 
-SYMBOL:
-	'~'
-	| '!'
-	| '@'
-	| '#'
-	| '$'
-	| '%'
-	| '^'
-	| '-'
-	| '+'
-	| '\\'
-	| ':'
-	| '"'
-	| '\''
-	| '<'
-	| '>'
-	| ','
-	| '.'
-	| '?'
-	| '/';

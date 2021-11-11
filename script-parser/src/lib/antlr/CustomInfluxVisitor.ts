@@ -87,7 +87,7 @@ export class CustomInfluxVisitor
   }
 
   visitDescription(ctx: DescriptionContext): Map<string, string> {
-    return new Map().set('description', ctx.LITERALS().join(' '));
+    return new Map().set('description', ctx.TEXT().text);
   }
 
   visitPricekey(ctx: PricekeyContext): Map<string, string> {
@@ -99,12 +99,11 @@ export class CustomInfluxVisitor
   }
 
   visitRequestHeaders(ctx: RequestHeadersContext): Map<string, string> {
-    const literals = ctx.LITERALS();
+    const keys = ctx.LITERALS();
+    const values = ctx.TEXT();
     const headers = {};
-    literals.forEach((literal, index) =>
-      index % 2 === 0
-        ? headers[literal.text]
-        : (headers[literals[index - 1].text] = literal.text)
+    keys.forEach(
+      (key, index) => (headers[key.text] = values[index].text.replace(/"/g, ''))
     );
     return new Map().set('requestheaders', JSON.stringify(headers));
   }
@@ -118,12 +117,11 @@ export class CustomInfluxVisitor
   }
 
   visitRequestParams(ctx: RequestParamsContext): Map<string, string> {
-    const literals = ctx.LITERALS();
+    const keys = ctx.LITERALS();
+    const values = ctx.TEXT();
     const params = {};
-    literals.forEach((literal, index) =>
-      index % 2 === 0
-        ? params[literal.text]
-        : (params[literals[index - 1].text] = literal.text)
+    keys.forEach(
+      (key, index) => (params[key.text] = values[index].text.replace(/"/g, ''))
     );
     return new Map().set('requestparams', JSON.stringify(params));
   }
@@ -145,7 +143,7 @@ export class CustomInfluxVisitor
   }
 
   visitInterval(ctx: IntervalContext): Map<string, string> {
-    return new Map().set('interval', `${ctx.LITERALS().text}s`)
+    return new Map().set('interval', `${ctx.LITERALS().text}s`);
   }
 
   aggregateResult(
