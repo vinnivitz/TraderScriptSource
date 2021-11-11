@@ -100,16 +100,18 @@ pricekey: ('pricekey' | 'PRICEKEY') WHITESPACE LITERALS (
 		'.' LITERALS
 	)*;
 
-requestMethod: ('requestmethod' | 'REQUESTMETHOD') WHITESPACE REQUESTMETHOD;
+requestMethod: ('method' | 'METHOD') WHITESPACE REQUESTMETHOD;
 
 requestHeaders:
-	('requestheaders' | 'REQUESTHEADERS') WHITESPACE (
+	('headers' | 'HEADERS') WHITESPACE (
 		(LITERALS ':' LITERALS) (',' LITERALS ':' LITERALS)*
 	);
 
 requestBasicAuth: ('basicauth' | 'BASICAUTH') WHITESPACE LITERALS ':' LITERALS;
 
-requestParams: ('requestparams' | 'REQUESTPARAMS') WHITESPACE LITERALS ':' LITERALS;
+requestParams: ('params' | 'PARAMS') WHITESPACE (
+		(LITERALS ':' LITERALS) (',' LITERALS ':' LITERALS)*
+	);
 
 /*
  * Lexer Rules
