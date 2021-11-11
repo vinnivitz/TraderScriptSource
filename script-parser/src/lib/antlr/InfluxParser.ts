@@ -30,62 +30,39 @@ export class InfluxParser extends Parser {
 	public static readonly T__0 = 1;
 	public static readonly T__1 = 2;
 	public static readonly T__2 = 3;
-	public static readonly T__3 = 4;
-	public static readonly T__4 = 5;
-	public static readonly T__5 = 6;
-	public static readonly T__6 = 7;
-	public static readonly T__7 = 8;
-	public static readonly T__8 = 9;
-	public static readonly T__9 = 10;
-	public static readonly T__10 = 11;
-	public static readonly T__11 = 12;
-	public static readonly T__12 = 13;
-	public static readonly T__13 = 14;
-	public static readonly T__14 = 15;
-	public static readonly T__15 = 16;
-	public static readonly T__16 = 17;
-	public static readonly T__17 = 18;
-	public static readonly T__18 = 19;
-	public static readonly T__19 = 20;
-	public static readonly T__20 = 21;
-	public static readonly T__21 = 22;
-	public static readonly T__22 = 23;
-	public static readonly T__23 = 24;
-	public static readonly T__24 = 25;
-	public static readonly T__25 = 26;
-	public static readonly T__26 = 27;
-	public static readonly T__27 = 28;
-	public static readonly T__28 = 29;
-	public static readonly T__29 = 30;
-	public static readonly T__30 = 31;
-	public static readonly T__31 = 32;
-	public static readonly T__32 = 33;
-	public static readonly T__33 = 34;
-	public static readonly T__34 = 35;
-	public static readonly T__35 = 36;
-	public static readonly T__36 = 37;
-	public static readonly T__37 = 38;
-	public static readonly T__38 = 39;
-	public static readonly T__39 = 40;
-	public static readonly T__40 = 41;
-	public static readonly T__41 = 42;
-	public static readonly T__42 = 43;
-	public static readonly T__43 = 44;
-	public static readonly T__44 = 45;
-	public static readonly T__45 = 46;
-	public static readonly T__46 = 47;
-	public static readonly T__47 = 48;
-	public static readonly T__48 = 49;
-	public static readonly T__49 = 50;
-	public static readonly T__50 = 51;
-	public static readonly OPERATOR = 52;
-	public static readonly URL_STRING = 53;
-	public static readonly REQUESTMETHOD = 54;
-	public static readonly LITERALS = 55;
-	public static readonly WHITESPACE = 56;
-	public static readonly NEWLINE = 57;
-	public static readonly QUOTE = 58;
-	public static readonly SYMBOL = 59;
+	public static readonly AUTH = 4;
+	public static readonly CONFIG = 5;
+	public static readonly DEF = 6;
+	public static readonly IF = 7;
+	public static readonly WITH = 8;
+	public static readonly AND = 9;
+	public static readonly OF = 10;
+	public static readonly THEN = 11;
+	public static readonly TYPE = 12;
+	public static readonly EMA = 13;
+	public static readonly RSI = 14;
+	public static readonly MACD = 15;
+	public static readonly ENDPOINT = 16;
+	public static readonly USERNAME = 17;
+	public static readonly PASSWORD = 18;
+	public static readonly URL = 19;
+	public static readonly PERIOD = 20;
+	public static readonly INTERVAL = 21;
+	public static readonly DESCRIPTION = 22;
+	public static readonly PRICEKEY = 23;
+	public static readonly METHOD = 24;
+	public static readonly HEADERS = 25;
+	public static readonly BASICAUTH = 26;
+	public static readonly PARAMS = 27;
+	public static readonly OPERATOR = 28;
+	public static readonly URL_STRING = 29;
+	public static readonly REQUESTMETHOD = 30;
+	public static readonly TEXT = 31;
+	public static readonly LITERALS = 32;
+	public static readonly WHITESPACE = 33;
+	public static readonly NEWLINE = 34;
+	public static readonly QUOTE = 35;
+	public static readonly SYMBOL = 36;
 	public static readonly RULE_influx = 0;
 	public static readonly RULE_line = 1;
 	public static readonly RULE_command = 2;
@@ -118,25 +95,15 @@ export class InfluxParser extends Parser {
 	];
 
 	private static readonly _LITERAL_NAMES: Array<string | undefined> = [
-		undefined, "'auth:'", "'AUTH:'", "'with'", "'WITH'", "'and'", "'AND'", 
-		"'config:'", "'CONFIG:'", "'def:'", "'DEF:'", "'of'", "'OF'", "'type'", 
-		"'TYPE'", "'if'", "'IF'", "'then'", "'THEN'", "'ema'", "'EMA'", "'rsi'", 
-		"'RSI'", "'macd'", "'MACD'", "'endpoint'", "'ENDPOINT'", "'username'", 
-		"'USERNAME'", "'password'", "'PASSWORD'", "'period'", "'PERIOD'", "'url'", 
-		"'URL'", "'interval'", "'INTERVAL'", "'description'", "'DESCRIPTION'", 
-		"'.'", "'pricekey'", "'PRICEKEY'", "'method'", "'METHOD'", "'headers'", 
-		"'HEADERS'", "':'", "','", "'basicauth'", "'BASICAUTH'", "'params'", "'PARAMS'",
+		undefined, "'.'", "':'", "','",
 	];
 	private static readonly _SYMBOLIC_NAMES: Array<string | undefined> = [
-		undefined, undefined, undefined, undefined, undefined, undefined, undefined, 
-		undefined, undefined, undefined, undefined, undefined, undefined, undefined, 
-		undefined, undefined, undefined, undefined, undefined, undefined, undefined, 
-		undefined, undefined, undefined, undefined, undefined, undefined, undefined, 
-		undefined, undefined, undefined, undefined, undefined, undefined, undefined, 
-		undefined, undefined, undefined, undefined, undefined, undefined, undefined, 
-		undefined, undefined, undefined, undefined, undefined, undefined, undefined, 
-		undefined, undefined, undefined, "OPERATOR", "URL_STRING", "REQUESTMETHOD", 
-		"LITERALS", "WHITESPACE", "NEWLINE", "QUOTE", "SYMBOL",
+		undefined, undefined, undefined, undefined, "AUTH", "CONFIG", "DEF", "IF", 
+		"WITH", "AND", "OF", "THEN", "TYPE", "EMA", "RSI", "MACD", "ENDPOINT", 
+		"USERNAME", "PASSWORD", "URL", "PERIOD", "INTERVAL", "DESCRIPTION", "PRICEKEY", 
+		"METHOD", "HEADERS", "BASICAUTH", "PARAMS", "OPERATOR", "URL_STRING", 
+		"REQUESTMETHOD", "TEXT", "LITERALS", "WHITESPACE", "NEWLINE", "QUOTE", 
+		"SYMBOL",
 	];
 	public static readonly VOCABULARY: Vocabulary = new VocabularyImpl(InfluxParser._LITERAL_NAMES, InfluxParser._SYMBOLIC_NAMES, []);
 
@@ -185,7 +152,7 @@ export class InfluxParser extends Parser {
 				this.state = 49;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-			} while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << InfluxParser.T__0) | (1 << InfluxParser.T__1) | (1 << InfluxParser.T__6) | (1 << InfluxParser.T__7) | (1 << InfluxParser.T__8) | (1 << InfluxParser.T__9) | (1 << InfluxParser.T__14) | (1 << InfluxParser.T__15))) !== 0));
+			} while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << InfluxParser.AUTH) | (1 << InfluxParser.CONFIG) | (1 << InfluxParser.DEF) | (1 << InfluxParser.IF))) !== 0));
 			this.state = 51;
 			this.match(InfluxParser.EOF);
 			}
@@ -241,29 +208,25 @@ export class InfluxParser extends Parser {
 			this.state = 60;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
-			case InfluxParser.T__0:
-			case InfluxParser.T__1:
+			case InfluxParser.AUTH:
 				{
 				this.state = 56;
 				this.auth();
 				}
 				break;
-			case InfluxParser.T__6:
-			case InfluxParser.T__7:
+			case InfluxParser.CONFIG:
 				{
 				this.state = 57;
 				this.config();
 				}
 				break;
-			case InfluxParser.T__8:
-			case InfluxParser.T__9:
+			case InfluxParser.DEF:
 				{
 				this.state = 58;
 				this.definition();
 				}
 				break;
-			case InfluxParser.T__14:
-			case InfluxParser.T__15:
+			case InfluxParser.IF:
 				{
 				this.state = 59;
 				this.condition();
@@ -292,22 +255,11 @@ export class InfluxParser extends Parser {
 	public auth(): AuthContext {
 		let _localctx: AuthContext = new AuthContext(this._ctx, this.state);
 		this.enterRule(_localctx, 6, InfluxParser.RULE_auth);
-		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
 			this.state = 62;
-			_la = this._input.LA(1);
-			if (!(_la === InfluxParser.T__0 || _la === InfluxParser.T__1)) {
-			this._errHandler.recoverInline(this);
-			} else {
-				if (this._input.LA(1) === Token.EOF) {
-					this.matchedEOF = true;
-				}
-
-				this._errHandler.reportMatch(this);
-				this.consume();
-			}
+			this.match(InfluxParser.AUTH);
 			this.state = 63;
 			this.match(InfluxParser.WHITESPACE);
 			this.state = 64;
@@ -315,31 +267,19 @@ export class InfluxParser extends Parser {
 			this.state = 65;
 			this.match(InfluxParser.WHITESPACE);
 			this.state = 66;
-			_la = this._input.LA(1);
-			if (!(_la === InfluxParser.T__2 || _la === InfluxParser.T__3)) {
-			this._errHandler.recoverInline(this);
-			} else {
-				if (this._input.LA(1) === Token.EOF) {
-					this.matchedEOF = true;
-				}
-
-				this._errHandler.reportMatch(this);
-				this.consume();
-			}
+			this.match(InfluxParser.WITH);
 			this.state = 67;
 			this.match(InfluxParser.WHITESPACE);
 			this.state = 70;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
-			case InfluxParser.T__26:
-			case InfluxParser.T__27:
+			case InfluxParser.USERNAME:
 				{
 				this.state = 68;
 				this.username();
 				}
 				break;
-			case InfluxParser.T__28:
-			case InfluxParser.T__29:
+			case InfluxParser.PASSWORD:
 				{
 				this.state = 69;
 				this.password();
@@ -351,31 +291,19 @@ export class InfluxParser extends Parser {
 			this.state = 72;
 			this.match(InfluxParser.WHITESPACE);
 			this.state = 73;
-			_la = this._input.LA(1);
-			if (!(_la === InfluxParser.T__4 || _la === InfluxParser.T__5)) {
-			this._errHandler.recoverInline(this);
-			} else {
-				if (this._input.LA(1) === Token.EOF) {
-					this.matchedEOF = true;
-				}
-
-				this._errHandler.reportMatch(this);
-				this.consume();
-			}
+			this.match(InfluxParser.AND);
 			this.state = 74;
 			this.match(InfluxParser.WHITESPACE);
 			this.state = 77;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
-			case InfluxParser.T__26:
-			case InfluxParser.T__27:
+			case InfluxParser.USERNAME:
 				{
 				this.state = 75;
 				this.username();
 				}
 				break;
-			case InfluxParser.T__28:
-			case InfluxParser.T__29:
+			case InfluxParser.PASSWORD:
 				{
 				this.state = 76;
 				this.password();
@@ -409,17 +337,7 @@ export class InfluxParser extends Parser {
 			this.enterOuterAlt(_localctx, 1);
 			{
 			this.state = 79;
-			_la = this._input.LA(1);
-			if (!(_la === InfluxParser.T__6 || _la === InfluxParser.T__7)) {
-			this._errHandler.recoverInline(this);
-			} else {
-				if (this._input.LA(1) === Token.EOF) {
-					this.matchedEOF = true;
-				}
-
-				this._errHandler.reportMatch(this);
-				this.consume();
-			}
+			this.match(InfluxParser.CONFIG);
 			this.state = 80;
 			this.match(InfluxParser.WHITESPACE);
 			this.state = 81;
@@ -427,73 +345,55 @@ export class InfluxParser extends Parser {
 			this.state = 82;
 			this.match(InfluxParser.WHITESPACE);
 			this.state = 83;
-			_la = this._input.LA(1);
-			if (!(_la === InfluxParser.T__2 || _la === InfluxParser.T__3)) {
-			this._errHandler.recoverInline(this);
-			} else {
-				if (this._input.LA(1) === Token.EOF) {
-					this.matchedEOF = true;
-				}
-
-				this._errHandler.reportMatch(this);
-				this.consume();
-			}
+			this.match(InfluxParser.WITH);
 			this.state = 84;
 			this.match(InfluxParser.WHITESPACE);
 			this.state = 93;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
-			case InfluxParser.T__32:
-			case InfluxParser.T__33:
+			case InfluxParser.URL:
 				{
 				this.state = 85;
 				this.url();
 				}
 				break;
-			case InfluxParser.T__34:
-			case InfluxParser.T__35:
+			case InfluxParser.INTERVAL:
 				{
 				this.state = 86;
 				this.interval();
 				}
 				break;
-			case InfluxParser.T__36:
-			case InfluxParser.T__37:
+			case InfluxParser.DESCRIPTION:
 				{
 				this.state = 87;
 				this.description();
 				}
 				break;
-			case InfluxParser.T__39:
-			case InfluxParser.T__40:
+			case InfluxParser.PRICEKEY:
 				{
 				this.state = 88;
 				this.pricekey();
 				}
 				break;
-			case InfluxParser.T__41:
-			case InfluxParser.T__42:
+			case InfluxParser.METHOD:
 				{
 				this.state = 89;
 				this.requestMethod();
 				}
 				break;
-			case InfluxParser.T__43:
-			case InfluxParser.T__44:
+			case InfluxParser.HEADERS:
 				{
 				this.state = 90;
 				this.requestHeaders();
 				}
 				break;
-			case InfluxParser.T__47:
-			case InfluxParser.T__48:
+			case InfluxParser.BASICAUTH:
 				{
 				this.state = 91;
 				this.requestBasicAuth();
 				}
 				break;
-			case InfluxParser.T__49:
-			case InfluxParser.T__50:
+			case InfluxParser.PARAMS:
 				{
 				this.state = 92;
 				this.requestParams();
@@ -511,73 +411,55 @@ export class InfluxParser extends Parser {
 				this.state = 95;
 				this.match(InfluxParser.WHITESPACE);
 				this.state = 96;
-				_la = this._input.LA(1);
-				if (!(_la === InfluxParser.T__4 || _la === InfluxParser.T__5)) {
-				this._errHandler.recoverInline(this);
-				} else {
-					if (this._input.LA(1) === Token.EOF) {
-						this.matchedEOF = true;
-					}
-
-					this._errHandler.reportMatch(this);
-					this.consume();
-				}
+				this.match(InfluxParser.AND);
 				this.state = 97;
 				this.match(InfluxParser.WHITESPACE);
 				this.state = 106;
 				this._errHandler.sync(this);
 				switch (this._input.LA(1)) {
-				case InfluxParser.T__32:
-				case InfluxParser.T__33:
+				case InfluxParser.URL:
 					{
 					this.state = 98;
 					this.url();
 					}
 					break;
-				case InfluxParser.T__34:
-				case InfluxParser.T__35:
+				case InfluxParser.INTERVAL:
 					{
 					this.state = 99;
 					this.interval();
 					}
 					break;
-				case InfluxParser.T__36:
-				case InfluxParser.T__37:
+				case InfluxParser.DESCRIPTION:
 					{
 					this.state = 100;
 					this.description();
 					}
 					break;
-				case InfluxParser.T__39:
-				case InfluxParser.T__40:
+				case InfluxParser.PRICEKEY:
 					{
 					this.state = 101;
 					this.pricekey();
 					}
 					break;
-				case InfluxParser.T__41:
-				case InfluxParser.T__42:
+				case InfluxParser.METHOD:
 					{
 					this.state = 102;
 					this.requestMethod();
 					}
 					break;
-				case InfluxParser.T__43:
-				case InfluxParser.T__44:
+				case InfluxParser.HEADERS:
 					{
 					this.state = 103;
 					this.requestHeaders();
 					}
 					break;
-				case InfluxParser.T__47:
-				case InfluxParser.T__48:
+				case InfluxParser.BASICAUTH:
 					{
 					this.state = 104;
 					this.requestBasicAuth();
 					}
 					break;
-				case InfluxParser.T__49:
-				case InfluxParser.T__50:
+				case InfluxParser.PARAMS:
 					{
 					this.state = 105;
 					this.requestParams();
@@ -617,17 +499,7 @@ export class InfluxParser extends Parser {
 			this.enterOuterAlt(_localctx, 1);
 			{
 			this.state = 113;
-			_la = this._input.LA(1);
-			if (!(_la === InfluxParser.T__8 || _la === InfluxParser.T__9)) {
-			this._errHandler.recoverInline(this);
-			} else {
-				if (this._input.LA(1) === Token.EOF) {
-					this.matchedEOF = true;
-				}
-
-				this._errHandler.reportMatch(this);
-				this.consume();
-			}
+			this.match(InfluxParser.DEF);
 			this.state = 114;
 			this.match(InfluxParser.WHITESPACE);
 			this.state = 115;
@@ -635,31 +507,11 @@ export class InfluxParser extends Parser {
 			this.state = 116;
 			this.match(InfluxParser.WHITESPACE);
 			this.state = 117;
-			_la = this._input.LA(1);
-			if (!(_la === InfluxParser.T__10 || _la === InfluxParser.T__11)) {
-			this._errHandler.recoverInline(this);
-			} else {
-				if (this._input.LA(1) === Token.EOF) {
-					this.matchedEOF = true;
-				}
-
-				this._errHandler.reportMatch(this);
-				this.consume();
-			}
+			this.match(InfluxParser.OF);
 			this.state = 118;
 			this.match(InfluxParser.WHITESPACE);
 			this.state = 119;
-			_la = this._input.LA(1);
-			if (!(_la === InfluxParser.T__12 || _la === InfluxParser.T__13)) {
-			this._errHandler.recoverInline(this);
-			} else {
-				if (this._input.LA(1) === Token.EOF) {
-					this.matchedEOF = true;
-				}
-
-				this._errHandler.reportMatch(this);
-				this.consume();
-			}
+			this.match(InfluxParser.TYPE);
 			this.state = 120;
 			this.match(InfluxParser.WHITESPACE);
 			this.state = 121;
@@ -672,17 +524,7 @@ export class InfluxParser extends Parser {
 				this.state = 122;
 				this.match(InfluxParser.WHITESPACE);
 				this.state = 123;
-				_la = this._input.LA(1);
-				if (!(_la === InfluxParser.T__2 || _la === InfluxParser.T__3)) {
-				this._errHandler.recoverInline(this);
-				} else {
-					if (this._input.LA(1) === Token.EOF) {
-						this.matchedEOF = true;
-					}
-
-					this._errHandler.reportMatch(this);
-					this.consume();
-				}
+				this.match(InfluxParser.WITH);
 				this.state = 135;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
@@ -694,15 +536,13 @@ export class InfluxParser extends Parser {
 					this.state = 133;
 					this._errHandler.sync(this);
 					switch (this._input.LA(1)) {
-					case InfluxParser.T__30:
-					case InfluxParser.T__31:
+					case InfluxParser.PERIOD:
 						{
 						this.state = 125;
 						this.period();
 						}
 						break;
-					case InfluxParser.T__32:
-					case InfluxParser.T__33:
+					case InfluxParser.URL:
 						{
 						this.state = 126;
 						this.url();
@@ -716,17 +556,7 @@ export class InfluxParser extends Parser {
 						this.state = 128;
 						this.match(InfluxParser.WHITESPACE);
 						this.state = 129;
-						_la = this._input.LA(1);
-						if (!(_la === InfluxParser.T__4 || _la === InfluxParser.T__5)) {
-						this._errHandler.recoverInline(this);
-						} else {
-							if (this._input.LA(1) === Token.EOF) {
-								this.matchedEOF = true;
-							}
-
-							this._errHandler.reportMatch(this);
-							this.consume();
-						}
+						this.match(InfluxParser.AND);
 						this.state = 130;
 						this.match(InfluxParser.WHITESPACE);
 						this.state = 131;
@@ -766,22 +596,11 @@ export class InfluxParser extends Parser {
 	public condition(): ConditionContext {
 		let _localctx: ConditionContext = new ConditionContext(this._ctx, this.state);
 		this.enterRule(_localctx, 12, InfluxParser.RULE_condition);
-		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
 			this.state = 141;
-			_la = this._input.LA(1);
-			if (!(_la === InfluxParser.T__14 || _la === InfluxParser.T__15)) {
-			this._errHandler.recoverInline(this);
-			} else {
-				if (this._input.LA(1) === Token.EOF) {
-					this.matchedEOF = true;
-				}
-
-				this._errHandler.reportMatch(this);
-				this.consume();
-			}
+			this.match(InfluxParser.IF);
 			this.state = 142;
 			this.match(InfluxParser.WHITESPACE);
 			this.state = 143;
@@ -797,17 +616,7 @@ export class InfluxParser extends Parser {
 			this.state = 148;
 			this.match(InfluxParser.WHITESPACE);
 			this.state = 149;
-			_la = this._input.LA(1);
-			if (!(_la === InfluxParser.T__16 || _la === InfluxParser.T__17)) {
-			this._errHandler.recoverInline(this);
-			} else {
-				if (this._input.LA(1) === Token.EOF) {
-					this.matchedEOF = true;
-				}
-
-				this._errHandler.reportMatch(this);
-				this.consume();
-			}
+			this.match(InfluxParser.THEN);
 			this.state = 150;
 			this.match(InfluxParser.WHITESPACE);
 			this.state = 151;
@@ -832,7 +641,6 @@ export class InfluxParser extends Parser {
 	public defType(): DefTypeContext {
 		let _localctx: DefTypeContext = new DefTypeContext(this._ctx, this.state);
 		this.enterRule(_localctx, 14, InfluxParser.RULE_defType);
-		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -845,72 +653,28 @@ export class InfluxParser extends Parser {
 				{
 				}
 				break;
-			case InfluxParser.T__18:
-			case InfluxParser.T__19:
+			case InfluxParser.EMA:
 				{
 				this.state = 154;
-				_la = this._input.LA(1);
-				if (!(_la === InfluxParser.T__18 || _la === InfluxParser.T__19)) {
-				this._errHandler.recoverInline(this);
-				} else {
-					if (this._input.LA(1) === Token.EOF) {
-						this.matchedEOF = true;
-					}
-
-					this._errHandler.reportMatch(this);
-					this.consume();
-				}
+				this.match(InfluxParser.EMA);
 				}
 				break;
-			case InfluxParser.T__20:
-			case InfluxParser.T__21:
+			case InfluxParser.RSI:
 				{
 				this.state = 155;
-				_la = this._input.LA(1);
-				if (!(_la === InfluxParser.T__20 || _la === InfluxParser.T__21)) {
-				this._errHandler.recoverInline(this);
-				} else {
-					if (this._input.LA(1) === Token.EOF) {
-						this.matchedEOF = true;
-					}
-
-					this._errHandler.reportMatch(this);
-					this.consume();
-				}
+				this.match(InfluxParser.RSI);
 				}
 				break;
-			case InfluxParser.T__22:
-			case InfluxParser.T__23:
+			case InfluxParser.MACD:
 				{
 				this.state = 156;
-				_la = this._input.LA(1);
-				if (!(_la === InfluxParser.T__22 || _la === InfluxParser.T__23)) {
-				this._errHandler.recoverInline(this);
-				} else {
-					if (this._input.LA(1) === Token.EOF) {
-						this.matchedEOF = true;
-					}
-
-					this._errHandler.reportMatch(this);
-					this.consume();
-				}
+				this.match(InfluxParser.MACD);
 				}
 				break;
-			case InfluxParser.T__24:
-			case InfluxParser.T__25:
+			case InfluxParser.ENDPOINT:
 				{
 				this.state = 157;
-				_la = this._input.LA(1);
-				if (!(_la === InfluxParser.T__24 || _la === InfluxParser.T__25)) {
-				this._errHandler.recoverInline(this);
-				} else {
-					if (this._input.LA(1) === Token.EOF) {
-						this.matchedEOF = true;
-					}
-
-					this._errHandler.reportMatch(this);
-					this.consume();
-				}
+				this.match(InfluxParser.ENDPOINT);
 				}
 				break;
 			default:
@@ -961,22 +725,11 @@ export class InfluxParser extends Parser {
 	public username(): UsernameContext {
 		let _localctx: UsernameContext = new UsernameContext(this._ctx, this.state);
 		this.enterRule(_localctx, 18, InfluxParser.RULE_username);
-		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
 			this.state = 162;
-			_la = this._input.LA(1);
-			if (!(_la === InfluxParser.T__26 || _la === InfluxParser.T__27)) {
-			this._errHandler.recoverInline(this);
-			} else {
-				if (this._input.LA(1) === Token.EOF) {
-					this.matchedEOF = true;
-				}
-
-				this._errHandler.reportMatch(this);
-				this.consume();
-			}
+			this.match(InfluxParser.USERNAME);
 			this.state = 163;
 			this.match(InfluxParser.WHITESPACE);
 			this.state = 164;
@@ -1001,22 +754,11 @@ export class InfluxParser extends Parser {
 	public password(): PasswordContext {
 		let _localctx: PasswordContext = new PasswordContext(this._ctx, this.state);
 		this.enterRule(_localctx, 20, InfluxParser.RULE_password);
-		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
 			this.state = 166;
-			_la = this._input.LA(1);
-			if (!(_la === InfluxParser.T__28 || _la === InfluxParser.T__29)) {
-			this._errHandler.recoverInline(this);
-			} else {
-				if (this._input.LA(1) === Token.EOF) {
-					this.matchedEOF = true;
-				}
-
-				this._errHandler.reportMatch(this);
-				this.consume();
-			}
+			this.match(InfluxParser.PASSWORD);
 			this.state = 167;
 			this.match(InfluxParser.WHITESPACE);
 			this.state = 168;
@@ -1066,22 +808,11 @@ export class InfluxParser extends Parser {
 	public period(): PeriodContext {
 		let _localctx: PeriodContext = new PeriodContext(this._ctx, this.state);
 		this.enterRule(_localctx, 24, InfluxParser.RULE_period);
-		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
 			this.state = 172;
-			_la = this._input.LA(1);
-			if (!(_la === InfluxParser.T__30 || _la === InfluxParser.T__31)) {
-			this._errHandler.recoverInline(this);
-			} else {
-				if (this._input.LA(1) === Token.EOF) {
-					this.matchedEOF = true;
-				}
-
-				this._errHandler.reportMatch(this);
-				this.consume();
-			}
+			this.match(InfluxParser.PERIOD);
 			this.state = 173;
 			this.match(InfluxParser.WHITESPACE);
 			this.state = 174;
@@ -1106,22 +837,11 @@ export class InfluxParser extends Parser {
 	public url(): UrlContext {
 		let _localctx: UrlContext = new UrlContext(this._ctx, this.state);
 		this.enterRule(_localctx, 26, InfluxParser.RULE_url);
-		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
 			this.state = 176;
-			_la = this._input.LA(1);
-			if (!(_la === InfluxParser.T__32 || _la === InfluxParser.T__33)) {
-			this._errHandler.recoverInline(this);
-			} else {
-				if (this._input.LA(1) === Token.EOF) {
-					this.matchedEOF = true;
-				}
-
-				this._errHandler.reportMatch(this);
-				this.consume();
-			}
+			this.match(InfluxParser.URL);
 			this.state = 177;
 			this.match(InfluxParser.WHITESPACE);
 			this.state = 178;
@@ -1196,22 +916,11 @@ export class InfluxParser extends Parser {
 	public interval(): IntervalContext {
 		let _localctx: IntervalContext = new IntervalContext(this._ctx, this.state);
 		this.enterRule(_localctx, 32, InfluxParser.RULE_interval);
-		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
 			this.state = 184;
-			_la = this._input.LA(1);
-			if (!(_la === InfluxParser.T__34 || _la === InfluxParser.T__35)) {
-			this._errHandler.recoverInline(this);
-			} else {
-				if (this._input.LA(1) === Token.EOF) {
-					this.matchedEOF = true;
-				}
-
-				this._errHandler.reportMatch(this);
-				this.consume();
-			}
+			this.match(InfluxParser.INTERVAL);
 			this.state = 185;
 			this.match(InfluxParser.WHITESPACE);
 			this.state = 186;
@@ -1236,52 +945,15 @@ export class InfluxParser extends Parser {
 	public description(): DescriptionContext {
 		let _localctx: DescriptionContext = new DescriptionContext(this._ctx, this.state);
 		this.enterRule(_localctx, 34, InfluxParser.RULE_description);
-		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
 			this.state = 188;
-			_la = this._input.LA(1);
-			if (!(_la === InfluxParser.T__36 || _la === InfluxParser.T__37)) {
-			this._errHandler.recoverInline(this);
-			} else {
-				if (this._input.LA(1) === Token.EOF) {
-					this.matchedEOF = true;
-				}
-
-				this._errHandler.reportMatch(this);
-				this.consume();
-			}
+			this.match(InfluxParser.DESCRIPTION);
 			this.state = 189;
 			this.match(InfluxParser.WHITESPACE);
 			this.state = 190;
-			this.match(InfluxParser.QUOTE);
-			this.state = 194;
-			this._errHandler.sync(this);
-			_la = this._input.LA(1);
-			while (((((_la - 39)) & ~0x1F) === 0 && ((1 << (_la - 39)) & ((1 << (InfluxParser.T__38 - 39)) | (1 << (InfluxParser.LITERALS - 39)) | (1 << (InfluxParser.WHITESPACE - 39)))) !== 0)) {
-				{
-				{
-				this.state = 191;
-				_la = this._input.LA(1);
-				if (!(((((_la - 39)) & ~0x1F) === 0 && ((1 << (_la - 39)) & ((1 << (InfluxParser.T__38 - 39)) | (1 << (InfluxParser.LITERALS - 39)) | (1 << (InfluxParser.WHITESPACE - 39)))) !== 0))) {
-				this._errHandler.recoverInline(this);
-				} else {
-					if (this._input.LA(1) === Token.EOF) {
-						this.matchedEOF = true;
-					}
-
-					this._errHandler.reportMatch(this);
-					this.consume();
-				}
-				}
-				}
-				this.state = 196;
-				this._errHandler.sync(this);
-				_la = this._input.LA(1);
-			}
-			this.state = 197;
-			this.match(InfluxParser.QUOTE);
+			this.match(InfluxParser.TEXT);
 			}
 		}
 		catch (re) {
@@ -1306,35 +978,25 @@ export class InfluxParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 199;
-			_la = this._input.LA(1);
-			if (!(_la === InfluxParser.T__39 || _la === InfluxParser.T__40)) {
-			this._errHandler.recoverInline(this);
-			} else {
-				if (this._input.LA(1) === Token.EOF) {
-					this.matchedEOF = true;
-				}
-
-				this._errHandler.reportMatch(this);
-				this.consume();
-			}
-			this.state = 200;
+			this.state = 192;
+			this.match(InfluxParser.PRICEKEY);
+			this.state = 193;
 			this.match(InfluxParser.WHITESPACE);
-			this.state = 201;
+			this.state = 194;
 			this.match(InfluxParser.LITERALS);
-			this.state = 206;
+			this.state = 199;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			while (_la === InfluxParser.T__38) {
+			while (_la === InfluxParser.T__0) {
 				{
 				{
-				this.state = 202;
-				this.match(InfluxParser.T__38);
-				this.state = 203;
+				this.state = 195;
+				this.match(InfluxParser.T__0);
+				this.state = 196;
 				this.match(InfluxParser.LITERALS);
 				}
 				}
-				this.state = 208;
+				this.state = 201;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
@@ -1358,25 +1020,14 @@ export class InfluxParser extends Parser {
 	public requestMethod(): RequestMethodContext {
 		let _localctx: RequestMethodContext = new RequestMethodContext(this._ctx, this.state);
 		this.enterRule(_localctx, 38, InfluxParser.RULE_requestMethod);
-		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 209;
-			_la = this._input.LA(1);
-			if (!(_la === InfluxParser.T__41 || _la === InfluxParser.T__42)) {
-			this._errHandler.recoverInline(this);
-			} else {
-				if (this._input.LA(1) === Token.EOF) {
-					this.matchedEOF = true;
-				}
-
-				this._errHandler.reportMatch(this);
-				this.consume();
-			}
-			this.state = 210;
+			this.state = 202;
+			this.match(InfluxParser.METHOD);
+			this.state = 203;
 			this.match(InfluxParser.WHITESPACE);
-			this.state = 211;
+			this.state = 204;
 			this.match(InfluxParser.REQUESTMETHOD);
 			}
 		}
@@ -1402,46 +1053,36 @@ export class InfluxParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 213;
-			_la = this._input.LA(1);
-			if (!(_la === InfluxParser.T__43 || _la === InfluxParser.T__44)) {
-			this._errHandler.recoverInline(this);
-			} else {
-				if (this._input.LA(1) === Token.EOF) {
-					this.matchedEOF = true;
-				}
-
-				this._errHandler.reportMatch(this);
-				this.consume();
-			}
-			this.state = 214;
+			this.state = 206;
+			this.match(InfluxParser.HEADERS);
+			this.state = 207;
 			this.match(InfluxParser.WHITESPACE);
 			{
 			{
-			this.state = 215;
+			this.state = 208;
 			this.match(InfluxParser.LITERALS);
-			this.state = 216;
-			this.match(InfluxParser.T__45);
-			this.state = 217;
-			this.match(InfluxParser.LITERALS);
+			this.state = 209;
+			this.match(InfluxParser.T__1);
+			this.state = 210;
+			this.match(InfluxParser.TEXT);
 			}
-			this.state = 225;
+			this.state = 218;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			while (_la === InfluxParser.T__46) {
+			while (_la === InfluxParser.T__2) {
 				{
 				{
-				this.state = 219;
-				this.match(InfluxParser.T__46);
+				this.state = 212;
+				this.match(InfluxParser.T__2);
+				this.state = 213;
+				this.match(InfluxParser.LITERALS);
+				this.state = 214;
+				this.match(InfluxParser.T__1);
+				this.state = 215;
+				this.match(InfluxParser.TEXT);
+				}
+				}
 				this.state = 220;
-				this.match(InfluxParser.LITERALS);
-				this.state = 221;
-				this.match(InfluxParser.T__45);
-				this.state = 222;
-				this.match(InfluxParser.LITERALS);
-				}
-				}
-				this.state = 227;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
@@ -1466,29 +1107,18 @@ export class InfluxParser extends Parser {
 	public requestBasicAuth(): RequestBasicAuthContext {
 		let _localctx: RequestBasicAuthContext = new RequestBasicAuthContext(this._ctx, this.state);
 		this.enterRule(_localctx, 42, InfluxParser.RULE_requestBasicAuth);
-		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 228;
-			_la = this._input.LA(1);
-			if (!(_la === InfluxParser.T__47 || _la === InfluxParser.T__48)) {
-			this._errHandler.recoverInline(this);
-			} else {
-				if (this._input.LA(1) === Token.EOF) {
-					this.matchedEOF = true;
-				}
-
-				this._errHandler.reportMatch(this);
-				this.consume();
-			}
-			this.state = 229;
+			this.state = 221;
+			this.match(InfluxParser.BASICAUTH);
+			this.state = 222;
 			this.match(InfluxParser.WHITESPACE);
-			this.state = 230;
+			this.state = 223;
 			this.match(InfluxParser.LITERALS);
-			this.state = 231;
-			this.match(InfluxParser.T__45);
-			this.state = 232;
+			this.state = 224;
+			this.match(InfluxParser.T__1);
+			this.state = 225;
 			this.match(InfluxParser.LITERALS);
 			}
 		}
@@ -1514,46 +1144,36 @@ export class InfluxParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 234;
-			_la = this._input.LA(1);
-			if (!(_la === InfluxParser.T__49 || _la === InfluxParser.T__50)) {
-			this._errHandler.recoverInline(this);
-			} else {
-				if (this._input.LA(1) === Token.EOF) {
-					this.matchedEOF = true;
-				}
-
-				this._errHandler.reportMatch(this);
-				this.consume();
-			}
-			this.state = 235;
+			this.state = 227;
+			this.match(InfluxParser.PARAMS);
+			this.state = 228;
 			this.match(InfluxParser.WHITESPACE);
 			{
 			{
-			this.state = 236;
+			this.state = 229;
 			this.match(InfluxParser.LITERALS);
-			this.state = 237;
-			this.match(InfluxParser.T__45);
-			this.state = 238;
-			this.match(InfluxParser.LITERALS);
+			this.state = 230;
+			this.match(InfluxParser.T__1);
+			this.state = 231;
+			this.match(InfluxParser.TEXT);
 			}
-			this.state = 246;
+			this.state = 239;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			while (_la === InfluxParser.T__46) {
+			while (_la === InfluxParser.T__2) {
 				{
 				{
-				this.state = 240;
-				this.match(InfluxParser.T__46);
+				this.state = 233;
+				this.match(InfluxParser.T__2);
+				this.state = 234;
+				this.match(InfluxParser.LITERALS);
+				this.state = 235;
+				this.match(InfluxParser.T__1);
+				this.state = 236;
+				this.match(InfluxParser.TEXT);
+				}
+				}
 				this.state = 241;
-				this.match(InfluxParser.LITERALS);
-				this.state = 242;
-				this.match(InfluxParser.T__45);
-				this.state = 243;
-				this.match(InfluxParser.LITERALS);
-				}
-				}
-				this.state = 248;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
@@ -1576,7 +1196,7 @@ export class InfluxParser extends Parser {
 	}
 
 	public static readonly _serializedATN: string =
-		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x03=\xFC\x04\x02" +
+		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x03&\xF5\x04\x02" +
 		"\t\x02\x04\x03\t\x03\x04\x04\t\x04\x04\x05\t\x05\x04\x06\t\x06\x04\x07" +
 		"\t\x07\x04\b\t\b\x04\t\t\t\x04\n\t\n\x04\v\t\v\x04\f\t\f\x04\r\t\r\x04" +
 		"\x0E\t\x0E\x04\x0F\t\x0F\x04\x10\t\x10\x04\x11\t\x11\x04\x12\t\x12\x04" +
@@ -1596,95 +1216,89 @@ export class InfluxParser extends Parser {
 		"\t\x03\t\x03\t\x05\t\xA1\n\t\x03\n\x03\n\x03\v\x03\v\x03\v\x03\v\x03\f" +
 		"\x03\f\x03\f\x03\f\x03\r\x03\r\x03\x0E\x03\x0E\x03\x0E\x03\x0E\x03\x0F" +
 		"\x03\x0F\x03\x0F\x03\x0F\x03\x10\x03\x10\x03\x11\x03\x11\x03\x12\x03\x12" +
-		"\x03\x12\x03\x12\x03\x13\x03\x13\x03\x13\x03\x13\x07\x13\xC3\n\x13\f\x13" +
-		"\x0E\x13\xC6\v\x13\x03\x13\x03\x13\x03\x14\x03\x14\x03\x14\x03\x14\x03" +
-		"\x14\x07\x14\xCF\n\x14\f\x14\x0E\x14\xD2\v\x14\x03\x15\x03\x15\x03\x15" +
-		"\x03\x15\x03\x16\x03\x16\x03\x16\x03\x16\x03\x16\x03\x16\x03\x16\x03\x16" +
-		"\x03\x16\x03\x16\x07\x16\xE2\n\x16\f\x16\x0E\x16\xE5\v\x16\x03\x17\x03" +
-		"\x17\x03\x17\x03\x17\x03\x17\x03\x17\x03\x18\x03\x18\x03\x18\x03\x18\x03" +
-		"\x18\x03\x18\x03\x18\x03\x18\x03\x18\x03\x18\x07\x18\xF7\n\x18\f\x18\x0E" +
-		"\x18\xFA\v\x18\x03\x18\x02\x02\x02\x19\x02\x02\x04\x02\x06\x02\b\x02\n" +
-		"\x02\f\x02\x0E\x02\x10\x02\x12\x02\x14\x02\x16\x02\x18\x02\x1A\x02\x1C" +
-		"\x02\x1E\x02 \x02\"\x02$\x02&\x02(\x02*\x02,\x02.\x02\x02\x1B\x03\x02" +
-		"\x03\x04\x03\x02\x05\x06\x03\x02\x07\b\x03\x02\t\n\x03\x02\v\f\x03\x02" +
-		"\r\x0E\x03\x02\x0F\x10\x03\x02\x11\x12\x03\x02\x13\x14\x03\x02\x15\x16" +
-		"\x03\x02\x17\x18\x03\x02\x19\x1A\x03\x02\x1B\x1C\x03\x02\x1D\x1E\x03\x02" +
-		"\x1F \x03\x02!\"\x03\x02#$\x03\x02%&\x03\x02\'(\x04\x02))9:\x03\x02*+" +
-		"\x03\x02,-\x03\x02./\x03\x0223\x03\x0245\x02\u0105\x021\x03\x02\x02\x02" +
-		"\x047\x03\x02\x02\x02\x06>\x03\x02\x02\x02\b@\x03\x02\x02\x02\nQ\x03\x02" +
-		"\x02\x02\fs\x03\x02\x02\x02\x0E\x8F\x03\x02\x02\x02\x10\xA0\x03\x02\x02" +
-		"\x02\x12\xA2\x03\x02\x02\x02\x14\xA4\x03\x02\x02\x02\x16\xA8\x03\x02\x02" +
-		"\x02\x18\xAC\x03\x02\x02\x02\x1A\xAE\x03\x02\x02\x02\x1C\xB2\x03\x02\x02" +
-		"\x02\x1E\xB6\x03\x02\x02\x02 \xB8\x03\x02\x02\x02\"\xBA\x03\x02\x02\x02" +
-		"$\xBE\x03\x02\x02\x02&\xC9\x03\x02\x02\x02(\xD3\x03\x02\x02\x02*\xD7\x03" +
-		"\x02\x02\x02,\xE6\x03\x02\x02\x02.\xEC\x03\x02\x02\x0202\x05\x04\x03\x02" +
-		"10\x03\x02\x02\x0223\x03\x02\x02\x0231\x03\x02\x02\x0234\x03\x02\x02\x02" +
-		"45\x03\x02\x02\x0256\x07\x02\x02\x036\x03\x03\x02\x02\x0278\x05\x06\x04" +
-		"\x0289\x07;\x02\x029\x05\x03\x02\x02\x02:?\x05\b\x05\x02;?\x05\n\x06\x02" +
-		"<?\x05\f\x07\x02=?\x05\x0E\b\x02>:\x03\x02\x02\x02>;\x03\x02\x02\x02>" +
-		"<\x03\x02\x02\x02>=\x03\x02\x02\x02?\x07\x03\x02\x02\x02@A\t\x02\x02\x02" +
-		"AB\x07:\x02\x02BC\x05\x12\n\x02CD\x07:\x02\x02DE\t\x03\x02\x02EH\x07:" +
-		"\x02\x02FI\x05\x14\v\x02GI\x05\x16\f\x02HF\x03\x02\x02\x02HG\x03\x02\x02" +
-		"\x02IJ\x03\x02\x02\x02JK\x07:\x02\x02KL\t\x04\x02\x02LO\x07:\x02\x02M" +
-		"P\x05\x14\v\x02NP\x05\x16\f\x02OM\x03\x02\x02\x02ON\x03\x02\x02\x02P\t" +
-		"\x03\x02\x02\x02QR\t\x05\x02\x02RS\x07:\x02\x02ST\x05\x18\r\x02TU\x07" +
-		":\x02\x02UV\t\x03\x02\x02V_\x07:\x02\x02W`\x05\x1C\x0F\x02X`\x05\"\x12" +
-		"\x02Y`\x05$\x13\x02Z`\x05&\x14\x02[`\x05(\x15\x02\\`\x05*\x16\x02]`\x05" +
-		",\x17\x02^`\x05.\x18\x02_W\x03\x02\x02\x02_X\x03\x02\x02\x02_Y\x03\x02" +
-		"\x02\x02_Z\x03\x02\x02\x02_[\x03\x02\x02\x02_\\\x03\x02\x02\x02_]\x03" +
-		"\x02\x02\x02_^\x03\x02\x02\x02`p\x03\x02\x02\x02ab\x07:\x02\x02bc\t\x04" +
-		"\x02\x02cl\x07:\x02\x02dm\x05\x1C\x0F\x02em\x05\"\x12\x02fm\x05$\x13\x02" +
-		"gm\x05&\x14\x02hm\x05(\x15\x02im\x05*\x16\x02jm\x05,\x17\x02km\x05.\x18" +
-		"\x02ld\x03\x02\x02\x02le\x03\x02\x02\x02lf\x03\x02\x02\x02lg\x03\x02\x02" +
-		"\x02lh\x03\x02\x02\x02li\x03\x02\x02\x02lj\x03\x02\x02\x02lk\x03\x02\x02" +
-		"\x02mo\x03\x02\x02\x02na\x03\x02\x02\x02or\x03\x02\x02\x02pn\x03\x02\x02" +
-		"\x02pq\x03\x02\x02\x02q\v\x03\x02\x02\x02rp\x03\x02\x02\x02st\t\x06\x02" +
-		"\x02tu\x07:\x02\x02uv\x05\x18\r\x02vw\x07:\x02\x02wx\t\x07\x02\x02xy\x07" +
-		":\x02\x02yz\t\b\x02\x02z{\x07:\x02\x02{\x8D\x05\x10\t\x02|}\x07:\x02\x02" +
-		"}\x89\t\x03\x02\x02~\x87\x07:\x02\x02\x7F\x88\x05\x1A\x0E\x02\x80\x88" +
-		"\x05\x1C\x0F\x02\x81\x82\x05\x1E\x10\x02\x82\x83\x07:\x02\x02\x83\x84" +
-		"\t\x04\x02\x02\x84\x85\x07:\x02\x02\x85\x86\x05 \x11\x02\x86\x88\x03\x02" +
-		"\x02\x02\x87\x7F\x03\x02\x02\x02\x87\x80\x03\x02\x02\x02\x87\x81\x03\x02" +
-		"\x02\x02\x88\x8A\x03\x02\x02\x02\x89~\x03\x02\x02\x02\x8A\x8B\x03\x02" +
-		"\x02\x02\x8B\x89\x03\x02\x02\x02\x8B\x8C\x03\x02\x02\x02\x8C\x8E\x03\x02" +
-		"\x02\x02\x8D|\x03\x02\x02\x02\x8D\x8E\x03\x02\x02\x02\x8E\r\x03\x02\x02" +
-		"\x02\x8F\x90\t\t\x02\x02\x90\x91\x07:\x02\x02\x91\x92\x079\x02\x02\x92" +
-		"\x93\x07:\x02\x02\x93\x94\x076\x02\x02\x94\x95\x07:\x02\x02\x95\x96\x07" +
-		"9\x02\x02\x96\x97\x07:\x02\x02\x97\x98\t\n\x02\x02\x98\x99\x07:\x02\x02" +
-		"\x99\x9A\x079\x02\x02\x9A\x0F\x03\x02\x02\x02\x9B\xA1\x03\x02\x02\x02" +
-		"\x9C\xA1\t\v\x02\x02\x9D\xA1\t\f\x02\x02\x9E\xA1\t\r\x02\x02\x9F\xA1\t" +
-		"\x0E\x02\x02\xA0\x9B\x03\x02\x02\x02\xA0\x9C\x03\x02\x02\x02\xA0\x9D\x03" +
-		"\x02\x02\x02\xA0\x9E\x03\x02\x02\x02\xA0\x9F\x03\x02\x02\x02\xA1\x11\x03" +
-		"\x02\x02\x02\xA2\xA3\x079\x02\x02\xA3\x13\x03\x02\x02\x02\xA4\xA5\t\x0F" +
-		"\x02\x02\xA5\xA6\x07:\x02\x02\xA6\xA7\x079\x02\x02\xA7\x15\x03\x02\x02" +
-		"\x02\xA8\xA9\t\x10\x02\x02\xA9\xAA\x07:\x02\x02\xAA\xAB\x079\x02\x02\xAB" +
-		"\x17\x03\x02\x02\x02\xAC\xAD\x079\x02\x02\xAD\x19\x03\x02\x02\x02\xAE" +
-		"\xAF\t\x11\x02\x02\xAF\xB0\x07:\x02\x02\xB0\xB1\x079\x02\x02\xB1\x1B\x03" +
-		"\x02\x02\x02\xB2\xB3\t\x12\x02\x02\xB3\xB4\x07:\x02\x02\xB4\xB5\x077\x02" +
-		"\x02\xB5\x1D\x03\x02\x02\x02\xB6\xB7\x079\x02\x02\xB7\x1F\x03\x02\x02" +
-		"\x02\xB8\xB9\x079\x02\x02\xB9!\x03\x02\x02\x02\xBA\xBB\t\x13\x02\x02\xBB" +
-		"\xBC\x07:\x02\x02\xBC\xBD\x079\x02\x02\xBD#\x03\x02\x02\x02\xBE\xBF\t" +
-		"\x14\x02\x02\xBF\xC0\x07:\x02\x02\xC0\xC4\x07<\x02\x02\xC1\xC3\t\x15\x02" +
-		"\x02\xC2\xC1\x03\x02\x02\x02\xC3\xC6\x03\x02\x02\x02\xC4\xC2\x03\x02\x02" +
-		"\x02\xC4\xC5\x03\x02\x02\x02\xC5\xC7\x03\x02\x02\x02\xC6\xC4\x03\x02\x02" +
-		"\x02\xC7\xC8\x07<\x02\x02\xC8%\x03\x02\x02\x02\xC9\xCA\t\x16\x02\x02\xCA" +
-		"\xCB\x07:\x02\x02\xCB\xD0\x079\x02\x02\xCC\xCD\x07)\x02\x02\xCD\xCF\x07" +
-		"9\x02\x02\xCE\xCC\x03\x02\x02\x02\xCF\xD2\x03\x02\x02\x02\xD0\xCE\x03" +
-		"\x02\x02\x02\xD0\xD1\x03\x02\x02\x02\xD1\'\x03\x02\x02\x02\xD2\xD0\x03" +
-		"\x02\x02\x02\xD3\xD4\t\x17\x02\x02\xD4\xD5\x07:\x02\x02\xD5\xD6\x078\x02" +
-		"\x02\xD6)\x03\x02\x02\x02\xD7\xD8\t\x18\x02\x02\xD8\xD9\x07:\x02\x02\xD9" +
-		"\xDA\x079\x02\x02\xDA\xDB\x070\x02\x02\xDB\xDC\x079\x02\x02\xDC\xE3\x03" +
-		"\x02\x02\x02\xDD\xDE\x071\x02\x02\xDE\xDF\x079\x02\x02\xDF\xE0\x070\x02" +
-		"\x02\xE0\xE2\x079\x02\x02\xE1\xDD\x03\x02\x02\x02\xE2\xE5\x03\x02\x02" +
-		"\x02\xE3\xE1\x03\x02\x02\x02\xE3\xE4\x03\x02\x02\x02\xE4+\x03\x02\x02" +
-		"\x02\xE5\xE3\x03\x02\x02\x02\xE6\xE7\t\x19\x02\x02\xE7\xE8\x07:\x02\x02" +
-		"\xE8\xE9\x079\x02\x02\xE9\xEA\x070\x02\x02\xEA\xEB\x079\x02\x02\xEB-\x03" +
-		"\x02\x02\x02\xEC\xED\t\x1A\x02\x02\xED\xEE\x07:\x02\x02\xEE\xEF\x079\x02" +
-		"\x02\xEF\xF0\x070\x02\x02\xF0\xF1\x079\x02\x02\xF1\xF8\x03\x02\x02\x02" +
-		"\xF2\xF3\x071\x02\x02\xF3\xF4\x079\x02\x02\xF4\xF5\x070\x02\x02\xF5\xF7" +
-		"\x079\x02\x02\xF6\xF2\x03\x02\x02\x02\xF7\xFA\x03\x02\x02\x02\xF8\xF6" +
-		"\x03\x02\x02\x02\xF8\xF9\x03\x02\x02\x02\xF9/\x03\x02\x02\x02\xFA\xF8" +
-		"\x03\x02\x02\x02\x113>HO_lp\x87\x8B\x8D\xA0\xC4\xD0\xE3\xF8";
+		"\x03\x12\x03\x12\x03\x13\x03\x13\x03\x13\x03\x13\x03\x14\x03\x14\x03\x14" +
+		"\x03\x14\x03\x14\x07\x14\xC8\n\x14\f\x14\x0E\x14\xCB\v\x14\x03\x15\x03" +
+		"\x15\x03\x15\x03\x15\x03\x16\x03\x16\x03\x16\x03\x16\x03\x16\x03\x16\x03" +
+		"\x16\x03\x16\x03\x16\x03\x16\x07\x16\xDB\n\x16\f\x16\x0E\x16\xDE\v\x16" +
+		"\x03\x17\x03\x17\x03\x17\x03\x17\x03\x17\x03\x17\x03\x18\x03\x18\x03\x18" +
+		"\x03\x18\x03\x18\x03\x18\x03\x18\x03\x18\x03\x18\x03\x18\x07\x18\xF0\n" +
+		"\x18\f\x18\x0E\x18\xF3\v\x18\x03\x18\x02\x02\x02\x19\x02\x02\x04\x02\x06" +
+		"\x02\b\x02\n\x02\f\x02\x0E\x02\x10\x02\x12\x02\x14\x02\x16\x02\x18\x02" +
+		"\x1A\x02\x1C\x02\x1E\x02 \x02\"\x02$\x02&\x02(\x02*\x02,\x02.\x02\x02" +
+		"\x02\x02\xFD\x021\x03\x02\x02\x02\x047\x03\x02\x02\x02\x06>\x03\x02\x02" +
+		"\x02\b@\x03\x02\x02\x02\nQ\x03\x02\x02\x02\fs\x03\x02\x02\x02\x0E\x8F" +
+		"\x03\x02\x02\x02\x10\xA0\x03\x02\x02\x02\x12\xA2\x03\x02\x02\x02\x14\xA4" +
+		"\x03\x02\x02\x02\x16\xA8\x03\x02\x02\x02\x18\xAC\x03\x02\x02\x02\x1A\xAE" +
+		"\x03\x02\x02\x02\x1C\xB2\x03\x02\x02\x02\x1E\xB6\x03\x02\x02\x02 \xB8" +
+		"\x03\x02\x02\x02\"\xBA\x03\x02\x02\x02$\xBE\x03\x02\x02\x02&\xC2\x03\x02" +
+		"\x02\x02(\xCC\x03\x02\x02\x02*\xD0\x03\x02\x02\x02,\xDF\x03\x02\x02\x02" +
+		".\xE5\x03\x02\x02\x0202\x05\x04\x03\x0210\x03\x02\x02\x0223\x03\x02\x02" +
+		"\x0231\x03\x02\x02\x0234\x03\x02\x02\x0245\x03\x02\x02\x0256\x07\x02\x02" +
+		"\x036\x03\x03\x02\x02\x0278\x05\x06\x04\x0289\x07$\x02\x029\x05\x03\x02" +
+		"\x02\x02:?\x05\b\x05\x02;?\x05\n\x06\x02<?\x05\f\x07\x02=?\x05\x0E\b\x02" +
+		">:\x03\x02\x02\x02>;\x03\x02\x02\x02><\x03\x02\x02\x02>=\x03\x02\x02\x02" +
+		"?\x07\x03\x02\x02\x02@A\x07\x06\x02\x02AB\x07#\x02\x02BC\x05\x12\n\x02" +
+		"CD\x07#\x02\x02DE\x07\n\x02\x02EH\x07#\x02\x02FI\x05\x14\v\x02GI\x05\x16" +
+		"\f\x02HF\x03\x02\x02\x02HG\x03\x02\x02\x02IJ\x03\x02\x02\x02JK\x07#\x02" +
+		"\x02KL\x07\v\x02\x02LO\x07#\x02\x02MP\x05\x14\v\x02NP\x05\x16\f\x02OM" +
+		"\x03\x02\x02\x02ON\x03\x02\x02\x02P\t\x03\x02\x02\x02QR\x07\x07\x02\x02" +
+		"RS\x07#\x02\x02ST\x05\x18\r\x02TU\x07#\x02\x02UV\x07\n\x02\x02V_\x07#" +
+		"\x02\x02W`\x05\x1C\x0F\x02X`\x05\"\x12\x02Y`\x05$\x13\x02Z`\x05&\x14\x02" +
+		"[`\x05(\x15\x02\\`\x05*\x16\x02]`\x05,\x17\x02^`\x05.\x18\x02_W\x03\x02" +
+		"\x02\x02_X\x03\x02\x02\x02_Y\x03\x02\x02\x02_Z\x03\x02\x02\x02_[\x03\x02" +
+		"\x02\x02_\\\x03\x02\x02\x02_]\x03\x02\x02\x02_^\x03\x02\x02\x02`p\x03" +
+		"\x02\x02\x02ab\x07#\x02\x02bc\x07\v\x02\x02cl\x07#\x02\x02dm\x05\x1C\x0F" +
+		"\x02em\x05\"\x12\x02fm\x05$\x13\x02gm\x05&\x14\x02hm\x05(\x15\x02im\x05" +
+		"*\x16\x02jm\x05,\x17\x02km\x05.\x18\x02ld\x03\x02\x02\x02le\x03\x02\x02" +
+		"\x02lf\x03\x02\x02\x02lg\x03\x02\x02\x02lh\x03\x02\x02\x02li\x03\x02\x02" +
+		"\x02lj\x03\x02\x02\x02lk\x03\x02\x02\x02mo\x03\x02\x02\x02na\x03\x02\x02" +
+		"\x02or\x03\x02\x02\x02pn\x03\x02\x02\x02pq\x03\x02\x02\x02q\v\x03\x02" +
+		"\x02\x02rp\x03\x02\x02\x02st\x07\b\x02\x02tu\x07#\x02\x02uv\x05\x18\r" +
+		"\x02vw\x07#\x02\x02wx\x07\f\x02\x02xy\x07#\x02\x02yz\x07\x0E\x02\x02z" +
+		"{\x07#\x02\x02{\x8D\x05\x10\t\x02|}\x07#\x02\x02}\x89\x07\n\x02\x02~\x87" +
+		"\x07#\x02\x02\x7F\x88\x05\x1A\x0E\x02\x80\x88\x05\x1C\x0F\x02\x81\x82" +
+		"\x05\x1E\x10\x02\x82\x83\x07#\x02\x02\x83\x84\x07\v\x02\x02\x84\x85\x07" +
+		"#\x02\x02\x85\x86\x05 \x11\x02\x86\x88\x03\x02\x02\x02\x87\x7F\x03\x02" +
+		"\x02\x02\x87\x80\x03\x02\x02\x02\x87\x81\x03\x02\x02\x02\x88\x8A\x03\x02" +
+		"\x02\x02\x89~\x03\x02\x02\x02\x8A\x8B\x03\x02\x02\x02\x8B\x89\x03\x02" +
+		"\x02\x02\x8B\x8C\x03\x02\x02\x02\x8C\x8E\x03\x02\x02\x02\x8D|\x03\x02" +
+		"\x02\x02\x8D\x8E\x03\x02\x02\x02\x8E\r\x03\x02\x02\x02\x8F\x90\x07\t\x02" +
+		"\x02\x90\x91\x07#\x02\x02\x91\x92\x07\"\x02\x02\x92\x93\x07#\x02\x02\x93" +
+		"\x94\x07\x1E\x02\x02\x94\x95\x07#\x02\x02\x95\x96\x07\"\x02\x02\x96\x97" +
+		"\x07#\x02\x02\x97\x98\x07\r\x02\x02\x98\x99\x07#\x02\x02\x99\x9A\x07\"" +
+		"\x02\x02\x9A\x0F\x03\x02\x02\x02\x9B\xA1\x03\x02\x02\x02\x9C\xA1\x07\x0F" +
+		"\x02\x02\x9D\xA1\x07\x10\x02\x02\x9E\xA1\x07\x11\x02\x02\x9F\xA1\x07\x12" +
+		"\x02\x02\xA0\x9B\x03\x02\x02\x02\xA0\x9C\x03\x02\x02\x02\xA0\x9D\x03\x02" +
+		"\x02\x02\xA0\x9E\x03\x02\x02\x02\xA0\x9F\x03\x02\x02\x02\xA1\x11\x03\x02" +
+		"\x02\x02\xA2\xA3\x07\"\x02\x02\xA3\x13\x03\x02\x02\x02\xA4\xA5\x07\x13" +
+		"\x02\x02\xA5\xA6\x07#\x02\x02\xA6\xA7\x07\"\x02\x02\xA7\x15\x03\x02\x02" +
+		"\x02\xA8\xA9\x07\x14\x02\x02\xA9\xAA\x07#\x02\x02\xAA\xAB\x07\"\x02\x02" +
+		"\xAB\x17\x03\x02\x02\x02\xAC\xAD\x07\"\x02\x02\xAD\x19\x03\x02\x02\x02" +
+		"\xAE\xAF\x07\x16\x02\x02\xAF\xB0\x07#\x02\x02\xB0\xB1\x07\"\x02\x02\xB1" +
+		"\x1B\x03\x02\x02\x02\xB2\xB3\x07\x15\x02\x02\xB3\xB4\x07#\x02\x02\xB4" +
+		"\xB5\x07\x1F\x02\x02\xB5\x1D\x03\x02\x02\x02\xB6\xB7\x07\"\x02\x02\xB7" +
+		"\x1F\x03\x02\x02\x02\xB8\xB9\x07\"\x02\x02\xB9!\x03\x02\x02\x02\xBA\xBB" +
+		"\x07\x17\x02\x02\xBB\xBC\x07#\x02\x02\xBC\xBD\x07\"\x02\x02\xBD#\x03\x02" +
+		"\x02\x02\xBE\xBF\x07\x18\x02\x02\xBF\xC0\x07#\x02\x02\xC0\xC1\x07!\x02" +
+		"\x02\xC1%\x03\x02\x02\x02\xC2\xC3\x07\x19\x02\x02\xC3\xC4\x07#\x02\x02" +
+		"\xC4\xC9\x07\"\x02\x02\xC5\xC6\x07\x03\x02\x02\xC6\xC8\x07\"\x02\x02\xC7" +
+		"\xC5\x03\x02\x02\x02\xC8\xCB\x03\x02\x02\x02\xC9\xC7\x03\x02\x02\x02\xC9" +
+		"\xCA\x03\x02\x02\x02\xCA\'\x03\x02\x02\x02\xCB\xC9\x03\x02\x02\x02\xCC" +
+		"\xCD\x07\x1A\x02\x02\xCD\xCE\x07#\x02\x02\xCE\xCF\x07 \x02\x02\xCF)\x03" +
+		"\x02\x02\x02\xD0\xD1\x07\x1B\x02\x02\xD1\xD2\x07#\x02\x02\xD2\xD3\x07" +
+		"\"\x02\x02\xD3\xD4\x07\x04\x02\x02\xD4\xD5\x07!\x02\x02\xD5\xDC\x03\x02" +
+		"\x02\x02\xD6\xD7\x07\x05\x02\x02\xD7\xD8\x07\"\x02\x02\xD8\xD9\x07\x04" +
+		"\x02\x02\xD9\xDB\x07!\x02\x02\xDA\xD6\x03\x02\x02\x02\xDB\xDE\x03\x02" +
+		"\x02\x02\xDC\xDA\x03\x02\x02\x02\xDC\xDD\x03\x02\x02\x02\xDD+\x03\x02" +
+		"\x02\x02\xDE\xDC\x03\x02\x02\x02\xDF\xE0\x07\x1C\x02\x02\xE0\xE1\x07#" +
+		"\x02\x02\xE1\xE2\x07\"\x02\x02\xE2\xE3\x07\x04\x02\x02\xE3\xE4\x07\"\x02" +
+		"\x02\xE4-\x03\x02\x02\x02\xE5\xE6\x07\x1D\x02\x02\xE6\xE7\x07#\x02\x02" +
+		"\xE7\xE8\x07\"\x02\x02\xE8\xE9\x07\x04\x02\x02\xE9\xEA\x07!\x02\x02\xEA" +
+		"\xF1\x03\x02\x02\x02\xEB\xEC\x07\x05\x02\x02\xEC\xED\x07\"\x02\x02\xED" +
+		"\xEE\x07\x04\x02\x02\xEE\xF0\x07!\x02\x02\xEF\xEB\x03\x02\x02\x02\xF0" +
+		"\xF3\x03\x02\x02\x02\xF1\xEF\x03\x02\x02\x02\xF1\xF2\x03\x02\x02\x02\xF2" +
+		"/\x03\x02\x02\x02\xF3\xF1\x03\x02\x02\x02\x103>HO_lp\x87\x8B\x8D\xA0\xC9" +
+		"\xDC\xF1";
 	public static __ATN: ATN;
 	public static get _ATN(): ATN {
 		if (!InfluxParser.__ATN) {
@@ -1774,6 +1388,7 @@ export class CommandContext extends ParserRuleContext {
 
 
 export class AuthContext extends ParserRuleContext {
+	public AUTH(): TerminalNode { return this.getToken(InfluxParser.AUTH, 0); }
 	public WHITESPACE(): TerminalNode[];
 	public WHITESPACE(i: number): TerminalNode;
 	public WHITESPACE(i?: number): TerminalNode | TerminalNode[] {
@@ -1786,6 +1401,8 @@ export class AuthContext extends ParserRuleContext {
 	public organization(): OrganizationContext {
 		return this.getRuleContext(0, OrganizationContext);
 	}
+	public WITH(): TerminalNode { return this.getToken(InfluxParser.WITH, 0); }
+	public AND(): TerminalNode { return this.getToken(InfluxParser.AND, 0); }
 	public username(): UsernameContext[];
 	public username(i: number): UsernameContext;
 	public username(i?: number): UsernameContext | UsernameContext[] {
@@ -1821,6 +1438,7 @@ export class AuthContext extends ParserRuleContext {
 
 
 export class ConfigContext extends ParserRuleContext {
+	public CONFIG(): TerminalNode { return this.getToken(InfluxParser.CONFIG, 0); }
 	public WHITESPACE(): TerminalNode[];
 	public WHITESPACE(i: number): TerminalNode;
 	public WHITESPACE(i?: number): TerminalNode | TerminalNode[] {
@@ -1833,6 +1451,7 @@ export class ConfigContext extends ParserRuleContext {
 	public name(): NameContext {
 		return this.getRuleContext(0, NameContext);
 	}
+	public WITH(): TerminalNode { return this.getToken(InfluxParser.WITH, 0); }
 	public url(): UrlContext[];
 	public url(i: number): UrlContext;
 	public url(i?: number): UrlContext | UrlContext[] {
@@ -1905,6 +1524,15 @@ export class ConfigContext extends ParserRuleContext {
 			return this.getRuleContext(i, RequestParamsContext);
 		}
 	}
+	public AND(): TerminalNode[];
+	public AND(i: number): TerminalNode;
+	public AND(i?: number): TerminalNode | TerminalNode[] {
+		if (i === undefined) {
+			return this.getTokens(InfluxParser.AND);
+		} else {
+			return this.getToken(InfluxParser.AND, i);
+		}
+	}
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
 		super(parent, invokingState);
 	}
@@ -1922,6 +1550,7 @@ export class ConfigContext extends ParserRuleContext {
 
 
 export class DefinitionContext extends ParserRuleContext {
+	public DEF(): TerminalNode { return this.getToken(InfluxParser.DEF, 0); }
 	public WHITESPACE(): TerminalNode[];
 	public WHITESPACE(i: number): TerminalNode;
 	public WHITESPACE(i?: number): TerminalNode | TerminalNode[] {
@@ -1934,9 +1563,12 @@ export class DefinitionContext extends ParserRuleContext {
 	public name(): NameContext {
 		return this.getRuleContext(0, NameContext);
 	}
+	public OF(): TerminalNode { return this.getToken(InfluxParser.OF, 0); }
+	public TYPE(): TerminalNode { return this.getToken(InfluxParser.TYPE, 0); }
 	public defType(): DefTypeContext {
 		return this.getRuleContext(0, DefTypeContext);
 	}
+	public WITH(): TerminalNode | undefined { return this.tryGetToken(InfluxParser.WITH, 0); }
 	public period(): PeriodContext[];
 	public period(i: number): PeriodContext;
 	public period(i?: number): PeriodContext | PeriodContext[] {
@@ -1962,6 +1594,15 @@ export class DefinitionContext extends ParserRuleContext {
 			return this.getRuleContexts(Ema1Context);
 		} else {
 			return this.getRuleContext(i, Ema1Context);
+		}
+	}
+	public AND(): TerminalNode[];
+	public AND(i: number): TerminalNode;
+	public AND(i?: number): TerminalNode | TerminalNode[] {
+		if (i === undefined) {
+			return this.getTokens(InfluxParser.AND);
+		} else {
+			return this.getToken(InfluxParser.AND, i);
 		}
 	}
 	public ema2(): Ema2Context[];
@@ -1990,6 +1631,7 @@ export class DefinitionContext extends ParserRuleContext {
 
 
 export class ConditionContext extends ParserRuleContext {
+	public IF(): TerminalNode { return this.getToken(InfluxParser.IF, 0); }
 	public WHITESPACE(): TerminalNode[];
 	public WHITESPACE(i: number): TerminalNode;
 	public WHITESPACE(i?: number): TerminalNode | TerminalNode[] {
@@ -2009,6 +1651,7 @@ export class ConditionContext extends ParserRuleContext {
 		}
 	}
 	public OPERATOR(): TerminalNode { return this.getToken(InfluxParser.OPERATOR, 0); }
+	public THEN(): TerminalNode { return this.getToken(InfluxParser.THEN, 0); }
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
 		super(parent, invokingState);
 	}
@@ -2026,6 +1669,10 @@ export class ConditionContext extends ParserRuleContext {
 
 
 export class DefTypeContext extends ParserRuleContext {
+	public EMA(): TerminalNode | undefined { return this.tryGetToken(InfluxParser.EMA, 0); }
+	public RSI(): TerminalNode | undefined { return this.tryGetToken(InfluxParser.RSI, 0); }
+	public MACD(): TerminalNode | undefined { return this.tryGetToken(InfluxParser.MACD, 0); }
+	public ENDPOINT(): TerminalNode | undefined { return this.tryGetToken(InfluxParser.ENDPOINT, 0); }
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
 		super(parent, invokingState);
 	}
@@ -2061,6 +1708,7 @@ export class OrganizationContext extends ParserRuleContext {
 
 
 export class UsernameContext extends ParserRuleContext {
+	public USERNAME(): TerminalNode { return this.getToken(InfluxParser.USERNAME, 0); }
 	public WHITESPACE(): TerminalNode { return this.getToken(InfluxParser.WHITESPACE, 0); }
 	public LITERALS(): TerminalNode { return this.getToken(InfluxParser.LITERALS, 0); }
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
@@ -2080,6 +1728,7 @@ export class UsernameContext extends ParserRuleContext {
 
 
 export class PasswordContext extends ParserRuleContext {
+	public PASSWORD(): TerminalNode { return this.getToken(InfluxParser.PASSWORD, 0); }
 	public WHITESPACE(): TerminalNode { return this.getToken(InfluxParser.WHITESPACE, 0); }
 	public LITERALS(): TerminalNode { return this.getToken(InfluxParser.LITERALS, 0); }
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
@@ -2117,6 +1766,7 @@ export class NameContext extends ParserRuleContext {
 
 
 export class PeriodContext extends ParserRuleContext {
+	public PERIOD(): TerminalNode { return this.getToken(InfluxParser.PERIOD, 0); }
 	public WHITESPACE(): TerminalNode { return this.getToken(InfluxParser.WHITESPACE, 0); }
 	public LITERALS(): TerminalNode { return this.getToken(InfluxParser.LITERALS, 0); }
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
@@ -2136,6 +1786,7 @@ export class PeriodContext extends ParserRuleContext {
 
 
 export class UrlContext extends ParserRuleContext {
+	public URL(): TerminalNode { return this.getToken(InfluxParser.URL, 0); }
 	public WHITESPACE(): TerminalNode { return this.getToken(InfluxParser.WHITESPACE, 0); }
 	public URL_STRING(): TerminalNode { return this.getToken(InfluxParser.URL_STRING, 0); }
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
@@ -2191,6 +1842,7 @@ export class Ema2Context extends ParserRuleContext {
 
 
 export class IntervalContext extends ParserRuleContext {
+	public INTERVAL(): TerminalNode { return this.getToken(InfluxParser.INTERVAL, 0); }
 	public WHITESPACE(): TerminalNode { return this.getToken(InfluxParser.WHITESPACE, 0); }
 	public LITERALS(): TerminalNode { return this.getToken(InfluxParser.LITERALS, 0); }
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
@@ -2210,33 +1862,9 @@ export class IntervalContext extends ParserRuleContext {
 
 
 export class DescriptionContext extends ParserRuleContext {
-	public WHITESPACE(): TerminalNode[];
-	public WHITESPACE(i: number): TerminalNode;
-	public WHITESPACE(i?: number): TerminalNode | TerminalNode[] {
-		if (i === undefined) {
-			return this.getTokens(InfluxParser.WHITESPACE);
-		} else {
-			return this.getToken(InfluxParser.WHITESPACE, i);
-		}
-	}
-	public QUOTE(): TerminalNode[];
-	public QUOTE(i: number): TerminalNode;
-	public QUOTE(i?: number): TerminalNode | TerminalNode[] {
-		if (i === undefined) {
-			return this.getTokens(InfluxParser.QUOTE);
-		} else {
-			return this.getToken(InfluxParser.QUOTE, i);
-		}
-	}
-	public LITERALS(): TerminalNode[];
-	public LITERALS(i: number): TerminalNode;
-	public LITERALS(i?: number): TerminalNode | TerminalNode[] {
-		if (i === undefined) {
-			return this.getTokens(InfluxParser.LITERALS);
-		} else {
-			return this.getToken(InfluxParser.LITERALS, i);
-		}
-	}
+	public DESCRIPTION(): TerminalNode { return this.getToken(InfluxParser.DESCRIPTION, 0); }
+	public WHITESPACE(): TerminalNode { return this.getToken(InfluxParser.WHITESPACE, 0); }
+	public TEXT(): TerminalNode { return this.getToken(InfluxParser.TEXT, 0); }
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
 		super(parent, invokingState);
 	}
@@ -2254,6 +1882,7 @@ export class DescriptionContext extends ParserRuleContext {
 
 
 export class PricekeyContext extends ParserRuleContext {
+	public PRICEKEY(): TerminalNode { return this.getToken(InfluxParser.PRICEKEY, 0); }
 	public WHITESPACE(): TerminalNode { return this.getToken(InfluxParser.WHITESPACE, 0); }
 	public LITERALS(): TerminalNode[];
 	public LITERALS(i: number): TerminalNode;
@@ -2281,6 +1910,7 @@ export class PricekeyContext extends ParserRuleContext {
 
 
 export class RequestMethodContext extends ParserRuleContext {
+	public METHOD(): TerminalNode { return this.getToken(InfluxParser.METHOD, 0); }
 	public WHITESPACE(): TerminalNode { return this.getToken(InfluxParser.WHITESPACE, 0); }
 	public REQUESTMETHOD(): TerminalNode { return this.getToken(InfluxParser.REQUESTMETHOD, 0); }
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
@@ -2300,6 +1930,7 @@ export class RequestMethodContext extends ParserRuleContext {
 
 
 export class RequestHeadersContext extends ParserRuleContext {
+	public HEADERS(): TerminalNode { return this.getToken(InfluxParser.HEADERS, 0); }
 	public WHITESPACE(): TerminalNode { return this.getToken(InfluxParser.WHITESPACE, 0); }
 	public LITERALS(): TerminalNode[];
 	public LITERALS(i: number): TerminalNode;
@@ -2308,6 +1939,15 @@ export class RequestHeadersContext extends ParserRuleContext {
 			return this.getTokens(InfluxParser.LITERALS);
 		} else {
 			return this.getToken(InfluxParser.LITERALS, i);
+		}
+	}
+	public TEXT(): TerminalNode[];
+	public TEXT(i: number): TerminalNode;
+	public TEXT(i?: number): TerminalNode | TerminalNode[] {
+		if (i === undefined) {
+			return this.getTokens(InfluxParser.TEXT);
+		} else {
+			return this.getToken(InfluxParser.TEXT, i);
 		}
 	}
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
@@ -2327,6 +1967,7 @@ export class RequestHeadersContext extends ParserRuleContext {
 
 
 export class RequestBasicAuthContext extends ParserRuleContext {
+	public BASICAUTH(): TerminalNode { return this.getToken(InfluxParser.BASICAUTH, 0); }
 	public WHITESPACE(): TerminalNode { return this.getToken(InfluxParser.WHITESPACE, 0); }
 	public LITERALS(): TerminalNode[];
 	public LITERALS(i: number): TerminalNode;
@@ -2354,6 +1995,7 @@ export class RequestBasicAuthContext extends ParserRuleContext {
 
 
 export class RequestParamsContext extends ParserRuleContext {
+	public PARAMS(): TerminalNode { return this.getToken(InfluxParser.PARAMS, 0); }
 	public WHITESPACE(): TerminalNode { return this.getToken(InfluxParser.WHITESPACE, 0); }
 	public LITERALS(): TerminalNode[];
 	public LITERALS(i: number): TerminalNode;
@@ -2362,6 +2004,15 @@ export class RequestParamsContext extends ParserRuleContext {
 			return this.getTokens(InfluxParser.LITERALS);
 		} else {
 			return this.getToken(InfluxParser.LITERALS, i);
+		}
+	}
+	public TEXT(): TerminalNode[];
+	public TEXT(i: number): TerminalNode;
+	public TEXT(i?: number): TerminalNode | TerminalNode[] {
+		if (i === undefined) {
+			return this.getTokens(InfluxParser.TEXT);
+		} else {
+			return this.getToken(InfluxParser.TEXT, i);
 		}
 	}
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
