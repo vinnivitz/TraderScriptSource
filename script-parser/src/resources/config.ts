@@ -17,7 +17,7 @@ import { globals, createInfluxData, replaceInFile } from '../utils';
  * @param flags antlr flags
  * @returns {*} {Promise}
  */
-export async function setupTelegraf(flags: Map<string, string>): Promise<void> {
+export async function setupConfig(flags: Map<string, string>): Promise<void> {
   updateMetadata(flags);
 
   setStockQueryScript();

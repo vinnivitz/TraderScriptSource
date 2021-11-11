@@ -1,22 +1,16 @@
 import { DashboardData } from './models/dashboard-data.model';
 import { CharStreams, CommonTokenStream, ParserRuleContext } from 'antlr4ts';
 import { readFileSync, writeFileSync } from 'fs';
-import {
-  ANTLRTree,
-  COMMAND,
-  FLAG,
-  INFLUX_ENTITY_TYPE,
-  SCRIPT_TYPE
-} from './models';
+import { ANTLRTree, COMMAND, FLAG, SCRIPT_TYPE } from './models';
 import { InfluxLexer, InfluxParser, CustomInfluxVisitor } from './lib/antlr';
+import { authenticate, setupDefinition, setupIndicators } from './resources';
 import {
-  authenticate,
-  setupDefinition,
-  setupIndicators,
-  setupTelegraf
-} from './resources';
-import { executeSequentially, extractPeriodNumberFromString, globals } from './utils';
+  executeSequentially,
+  extractPeriodNumberFromString,
+  globals
+} from './utils';
 import axios from 'axios';
+import { setupConfig } from './resources/config';
 
 /**
  * Fetches the user script parses the tree and executes the programm.
@@ -59,7 +53,7 @@ async function execRequests(tree: ANTLRTree): Promise<void> {
         console.log('User authenticated to InfluxDB.');
         break;
       case COMMAND.CONFIG:
-        await setupTelegraf(flags);
+        await setupConfig(flags);
         dashboardData.configName = flags.get(FLAG.NAME);
         console.log('Telegraf is running successfully.');
         break;
@@ -86,7 +80,9 @@ async function execRequests(tree: ANTLRTree): Promise<void> {
         break;
     }
   });
-  dashboardData.interval = extractPeriodNumberFromString(globals.metaData.interval);
+  dashboardData.interval = extractPeriodNumberFromString(
+    globals.metaData.interval
+  );
   dashboardData.measurement = globals.metaData.influxStockMeasurement;
   writeFileSync(
     `${process.env.DASHBOARD_PATH ?? '/home/dashboard'}/assets/config.json`,
