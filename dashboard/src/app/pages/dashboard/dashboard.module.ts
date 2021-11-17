@@ -4,7 +4,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { ChartState } from './../../states/chart.state';
 import { MatCardModule } from '@angular/material/card';
-import { AuthState } from './../../states/auth.state';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard.component';
@@ -31,7 +30,7 @@ const routes: Routes = [{ path: '', component: DashboardComponent }];
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    NgxsModule.forFeature([AuthState, ChartState]),
+    NgxsModule.forFeature([ChartState]),
     MatCardModule,
     MatButtonModule,
     ChartModule,

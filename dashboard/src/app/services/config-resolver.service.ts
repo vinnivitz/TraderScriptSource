@@ -1,28 +1,23 @@
 import { Store } from '@ngxs/store';
 import { Color } from '@angular-material-components/color-picker';
-import { AuthService } from './auth.service';
 import { InfluxConfig } from './../models/influx-config.model';
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { Observable, defer } from 'rxjs';
 import { INFLUX_FILTER_TYPE } from '../models/influx-filter-type.enum';
 import { ChartState } from '../states/chart.state';
+import { ChartService } from './chart.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConfigResolverService implements Resolve<InfluxConfig> {
-  constructor(private authService: AuthService, private store: Store) {}
+  constructor(private chartService: ChartService, private store: Store) {}
 
   resolve(): Observable<InfluxConfig> {
     return defer(async () => {
-      const config = await this.authService.getConfig().toPromise();
+      const config = await this.chartService.getConfig().toPromise();
       const storedConfig = this.store.selectSnapshot(ChartState.config);
-      config.defs.unshift({
-        name: 'stock',
-        type: INFLUX_FILTER_TYPE.STOCK,
-        show: true
-      });
       config.defs = config.defs.map((def) => {
         const storedDef = storedConfig?.defs.find(
           (item) => item.name === def.name

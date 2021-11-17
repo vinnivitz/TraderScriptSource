@@ -5,14 +5,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthGuard } from './guards/auth.guard';
-import { NgxsModule, NGXS_PLUGINS } from '@ngxs/store';
-import { AuthState } from './states/auth.state';
+import { NgxsModule } from '@ngxs/store';
 import { environment } from 'src/environments/environment';
 import { NgxsEmitPluginModule } from '@ngxs-labs/emitter';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { ChartState } from './states/chart.state';
-import { logoutPlugin } from './states/helper.state';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,16 +18,14 @@ import { logoutPlugin } from './states/helper.state';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    NgxsModule.forRoot([AuthState], {
-      developmentMode: !environment.production
+    NgxsModule.forRoot([ChartState], {
+      developmentMode: false
     }),
-    NgxsStoragePluginModule.forRoot({ key: [AuthState, ChartState] }),
+    NgxsStoragePluginModule.forRoot({ key: [ChartState] }),
     NgxsEmitPluginModule.forRoot()
   ],
   providers: [
-    AuthGuard,
-    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
-    { provide: NGXS_PLUGINS, useValue: logoutPlugin, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }
   ],
   bootstrap: [AppComponent]
 })

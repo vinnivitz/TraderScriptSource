@@ -1,15 +1,13 @@
 import { DashboardNotification } from './../../models/dashboard-notification.model';
 import { ChartState } from './../../states/chart.state';
 import { Emittable, Emitter } from '@ngxs-labs/emitter';
-import { AuthState } from './../../states/auth.state';
-import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Select } from '@ngxs/store';
 import { Chart, registerables, ChartData } from 'chart.js';
-import { ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { InfluxConfig } from 'src/app/models/influx-config.model';
 import { Color } from '@angular-material-components/color-picker';
+import { ActivatedRoute } from '@angular/router';
 Chart.register(...registerables);
 
 @Component({
@@ -41,19 +39,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
   @Select(ChartState.notifications)
   notifications: Observable<DashboardNotification[]>;
 
-  @Emitter(ChartState.onFetchData) onFetchData: Emittable<any>;
-  @Emitter(AuthState.onLogout) onLogout: Emittable<void>;
-
-  @ViewChild('chart', { static: true }) canvas: ElementRef<HTMLCanvasElement>;
+  @Emitter(ChartState.onFetchData) onFetchData: Emittable<InfluxConfig>;
 
   constructor(activatedRoute: ActivatedRoute) {
     this.config = activatedRoute.snapshot.data.config;
-    this.panel = this.config.defs.map((def) => {
-      return { name: def.name, expanded: false };
-    });
-    this.intervalId = setInterval(() => {
-      this.onFetchData.emit(this.config);
-    }, this.config.interval * 1000);
+    this.panel = this.config.defs.map((def) => ({
+      name: def.name,
+      expanded: false
+    }));
+    this.intervalId = setInterval(
+      () => this.onFetchData.emit(this.config),
+      this.config.interval * 1000
+    );
   }
 
   ngOnInit(): void {}
@@ -62,10 +59,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     if (this.intervalId) {
       clearInterval(this.intervalId);
     }
-  }
-
-  logout(): void {
-    this.onLogout.emit();
   }
 
   updateColor(color: Color, name: string): void {

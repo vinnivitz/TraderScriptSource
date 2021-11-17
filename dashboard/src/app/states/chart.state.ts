@@ -12,7 +12,11 @@ import { ChartData } from 'chart.js';
 import { InfluxNotification } from '../models/influx-notification.model';
 
 const AUTH_STATE_TOKEN = new StateToken<ChartStateModel>('chart');
-const DEFAULT_STATE = { data: null, config: null, notifications: [] };
+const DEFAULT_STATE = {
+  data: { datasets: [], labels: [] },
+  config: null,
+  notifications: []
+};
 
 @State<ChartStateModel>({
   name: AUTH_STATE_TOKEN,
@@ -28,7 +32,7 @@ export class ChartState {
 
   @Selector()
   static data(state: ChartStateModel): ChartData {
-    return JSON.parse(JSON.stringify(state.data));
+    return JSON.parse(JSON.stringify(state.data ?? null));
   }
 
   @Selector()
@@ -48,38 +52,12 @@ export class ChartState {
   ): Observable<ChartData> {
     return defer(async () => {
       const config = action.payload;
+      ctx.patchState({
+        config
+      });
       const data: ChartData = { datasets: [] };
       let query = `from(bucket: \"${config.configName}_buckets\")\n|>range(start: -${config.range})`;
-      const stock = this.csvJSON<InfluxChartData>(
-        await this.resource
-          .fetchData(
-            config.org,
-            `${query}\n|>filter(fn: (r) => r._measurement == \"${config.measurement}\")`
-          )
-          .toPromise()
-      );
-      const labels = this.getLabels(stock);
-      data.labels = labels.slice(0, labels.length - 2);
-      const notifications = this.csvJSON<InfluxNotification>(
-        await this.resource
-          .fetchData(
-            config.org,
-            `from(bucket: \"_monitoring\")\n|>range(start: -100m)\n|>filter(fn: (r) => r._measurement == \"notifications\" and r._field == \"_message\")`
-          )
-          .toPromise()
-      );
-      const dashboardNotifications: DashboardNotification[] = notifications
-        .slice(0, notifications.length - 2)
-        .map((notification, i) => ({
-          number: ++i,
-          name: notification['check_type\r'].substring(
-            0,
-            notification['check_type\r'].length - 2
-          ),
-          time: this.getTimeFromDate(new Date(notification._time)),
-          description: notification._value,
-          sent: notification._sent
-        }));
+      data.labels = await this.getLabels(config, query);
       await this.executeSequentially(config.defs, async (def) => {
         if (def.show) {
           switch (def.type) {
@@ -87,7 +65,9 @@ export class ChartState {
               query = `${query}\n|>filter(fn: (r) => r._measurement == \"${config.measurement}\")`;
               break;
             case INFLUX_FILTER_TYPE.EMA:
-              query = `${query}\n|>filter(fn: (r) => r._measurement == \"${config.measurement}\")\n|>exponentialMovingAverage(n: ${def.period})`;
+              query = `${query}\n|>filter(fn: (r) => r._measurement == \"${
+                config.measurement
+              }\")\n|>exponentialMovingAverage(n: ${def.period})`;
               break;
             case INFLUX_FILTER_TYPE.RSI:
               query = `${query}\n|>filter(fn: (r) => r._measurement == \"${config.measurement}\")\n|>relativeStrengthIndex(n: ${def.period})`;
@@ -110,7 +90,11 @@ export class ChartState {
           });
         }
       });
-      ctx.patchState({ data, config, notifications: dashboardNotifications });
+      ctx.patchState({
+        data,
+        config,
+        notifications: await this.getNotifications(config)
+      });
       return data;
     });
   }
@@ -133,8 +117,46 @@ export class ChartState {
     return result;
   }
 
-  private static getLabels(data: InfluxChartData[]): string[] {
-    return data.map((item) => this.getTimeFromDate(new Date(item._time)));
+  private static async getLabels(
+    config: InfluxConfig,
+    query: string
+  ): Promise<string[]> {
+    const data = this.csvJSON<InfluxChartData>(
+      await this.resource
+        .fetchData(
+          config.org,
+          `${query}\n|>filter(fn: (r) => r._measurement == \"${config.measurement}\")`
+        )
+        .toPromise()
+    );
+    return data
+      .map((item) => this.getTimeFromDate(new Date(item._time)))
+      .slice(0, data.length - 2);
+  }
+
+  private static async getNotifications(
+    config: InfluxConfig
+  ): Promise<DashboardNotification[]> {
+    const notifications = this.csvJSON<InfluxNotification>(
+      await this.resource
+        .fetchData(
+          config.org,
+          `from(bucket: \"_monitoring\")\n|>range(start: -100m)\n|>filter(fn: (r) => r._measurement == \"notifications\" and r._field == \"_message\")`
+        )
+        .toPromise()
+    );
+    return notifications
+      .slice(0, notifications.length - 2)
+      .map((notification, i) => ({
+        number: ++i,
+        name: notification['check_type\r'].substring(
+          0,
+          notification['check_type\r'].length - 2
+        ),
+        time: this.getTimeFromDate(new Date(notification._time)),
+        description: notification._value,
+        sent: notification._sent
+      }));
   }
 
   private static getData(data: InfluxChartData[]): number[] {

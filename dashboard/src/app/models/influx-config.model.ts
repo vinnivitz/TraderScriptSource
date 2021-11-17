@@ -16,4 +16,6 @@ export interface InfluxConfig {
   range?: string;
   interval?: number;
   measurement?: string;
+  token?: string;
+  offset?: number;
 }
