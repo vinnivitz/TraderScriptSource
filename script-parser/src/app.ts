@@ -1,9 +1,5 @@
 import { DashboardData } from './models/dashboard-data.model';
-import {
-  CharStreams,
-  CommonTokenStream,
-  ParserRuleContext,
-} from 'antlr4ts';
+import { CharStreams, CommonTokenStream, ParserRuleContext } from 'antlr4ts';
 import { readFileSync, writeFileSync } from 'fs';
 import { ANTLRTree, COMMAND, FLAG, SCRIPT_TYPE } from './models';
 import { InfluxLexer, InfluxParser, CustomInfluxVisitor } from './lib/antlr';
@@ -23,15 +19,14 @@ import { setupConfig } from './resources/config';
  * @returns {*}  {Promise<void>}
  */
 async function init(): Promise<void> {
-  initAxios();
-
-  initMetaData();
-
-  // reads script from user
   try {
+    initAxios();
+    initMetaData();
+    // reads script from user
     const input = readFileSync(globals.metaData.scriptFilePath).toString();
     const tree = getANTLRTree(input);
     await execRequests(tree);
+    createDashboardConfigFile();
     console.log(`Parsing successfully finished.`);
   } catch (err) {
     console.log(`Parsing failed.\nError: ${err}`);
@@ -45,32 +40,20 @@ async function init(): Promise<void> {
  * @returns {*}  {Promise<void>}
  */
 async function execRequests(tree: ANTLRTree): Promise<void> {
-  const dashboardData: DashboardData = { defs: [] };
   await executeSequentially(tree, async (leaf) => {
     const command = leaf[0];
     const flags = leaf[1];
     switch (command) {
       case COMMAND.AUTH:
         await authenticate(flags);
-        dashboardData.username = flags.get(FLAG.USERNAME);
-        dashboardData.org = flags.get(FLAG.INFLUX_ORGANIZATION);
         console.log('User authenticated to InfluxDB.');
         break;
       case COMMAND.CONFIG:
         await setupConfig(flags);
-        dashboardData.configName = flags.get(FLAG.NAME);
         console.log('Telegraf is running successfully.');
         break;
       case COMMAND.DEFINITION:
         await setupDefinition(flags);
-        const type = flags.get(FLAG.TYPE);
-        if (type !== SCRIPT_TYPE.ENDPOINT) {
-          dashboardData.defs.push({
-            name: flags.get(FLAG.NAME),
-            type: flags.get(FLAG.TYPE),
-            period: flags.get(FLAG.PERIOD)
-          });
-        }
         console.log(`Setup definition ${flags.get(FLAG.NAME)}.`);
         break;
       case COMMAND.CONDITION:
@@ -84,14 +67,6 @@ async function execRequests(tree: ANTLRTree): Promise<void> {
         break;
     }
   });
-  dashboardData.interval = extractPeriodNumberFromString(
-    globals.metaData.interval
-  );
-  dashboardData.measurement = globals.metaData.influxStockMeasurement;
-  writeFileSync(
-    `${process.env.DASHBOARD_PATH ?? '/home/dashboard'}/assets/config.json`,
-    JSON.stringify(dashboardData)
-  );
 }
 
 /**
@@ -146,6 +121,34 @@ function initMetaData(): void {
     process.env.SCRIPT_FILE_PATH ?? '/home/config.txt';
   globals.metaData.libDirPath =
     process.env.SCRIPT_PARSER_LIB_DIR_PATH ?? '/home/lib';
+}
+
+/**
+ * Creates the config script for the dashboard and stores it in the assets directory of the dashboard.
+ *
+ */
+function createDashboardConfigFile(): void {
+  const defs = [...globals.indicators.entries()]
+    .filter(([_, value]) => value.type !== SCRIPT_TYPE.ENDPOINT)
+    .map(([key, value]) => ({
+      name: key,
+      type: value.type,
+      period: value?.period
+    }));
+  const config: DashboardData = {
+    org: globals.metaData.org,
+    configName: globals.metaData.configName,
+    interval: extractPeriodNumberFromString(globals.metaData.interval),
+    measurement: globals.metaData.influxStockMeasurement,
+    token: globals.metaData.influxToken,
+    username: globals.metaData.username,
+    offset: extractPeriodNumberFromString(globals.metaData.influxOffset),
+    defs
+  };
+  writeFileSync(
+    `${process.env.DASHBOARD_PATH ?? '/home/dashboard'}/assets/config.json`,
+    JSON.stringify(config)
+  );
 }
 
 // run program
