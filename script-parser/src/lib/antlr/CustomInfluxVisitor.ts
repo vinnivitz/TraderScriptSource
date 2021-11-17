@@ -100,7 +100,7 @@ export class CustomInfluxVisitor
     return new Map().set(FLAG.PRICE_KEY, ctx.LITERALS().join('.'));
   }
 
-  visitRequestType(ctx: RequestMethodContext): ANTLRFlags {
+  visitRequestMethod(ctx: RequestMethodContext): ANTLRFlags {
     return new Map().set(FLAG.REQUEST_METHOD, ctx.REQUESTMETHOD().text);
   }
 
