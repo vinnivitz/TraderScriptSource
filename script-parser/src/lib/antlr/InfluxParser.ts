@@ -62,7 +62,6 @@ export class InfluxParser extends Parser {
 	public static readonly WHITESPACE = 33;
 	public static readonly NEWLINE = 34;
 	public static readonly QUOTE = 35;
-	public static readonly SYMBOL = 36;
 	public static readonly RULE_influx = 0;
 	public static readonly RULE_line = 1;
 	public static readonly RULE_command = 2;
@@ -102,8 +101,7 @@ export class InfluxParser extends Parser {
 		"WITH", "AND", "OF", "THEN", "TYPE", "EMA", "RSI", "MACD", "ENDPOINT", 
 		"USERNAME", "PASSWORD", "URL", "PERIOD", "INTERVAL", "DESCRIPTION", "PRICEKEY", 
 		"METHOD", "HEADERS", "BASICAUTH", "PARAMS", "OPERATOR", "URL_STRING", 
-		"REQUESTMETHOD", "TEXT", "LITERALS", "WHITESPACE", "NEWLINE", "QUOTE", 
-		"SYMBOL",
+		"REQUESTMETHOD", "TEXT", "LITERALS", "WHITESPACE", "NEWLINE", "QUOTE",
 	];
 	public static readonly VOCABULARY: Vocabulary = new VocabularyImpl(InfluxParser._LITERAL_NAMES, InfluxParser._SYMBOLIC_NAMES, []);
 
@@ -1196,7 +1194,7 @@ export class InfluxParser extends Parser {
 	}
 
 	public static readonly _serializedATN: string =
-		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x03&\xF5\x04\x02" +
+		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x03%\xF5\x04\x02" +
 		"\t\x02\x04\x03\t\x03\x04\x04\t\x04\x04\x05\t\x05\x04\x06\t\x06\x04\x07" +
 		"\t\x07\x04\b\t\b\x04\t\t\t\x04\n\t\n\x04\v\t\v\x04\f\t\f\x04\r\t\r\x04" +
 		"\x0E\t\x0E\x04\x0F\t\x0F\x04\x10\t\x10\x04\x11\t\x11\x04\x12\t\x12\x04" +
