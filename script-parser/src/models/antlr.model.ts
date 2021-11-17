@@ -1,5 +1,10 @@
-export type ANTLRItem = [string, Map<string, string>];
+import { FLAG } from './flag.enum';
+import { COMMAND } from './command.enum';
+
+export type ANTLRFlags = Map<FLAG, string>;
+
+export type ANTLRItem = [COMMAND, Map<string, string>];
 
 export type ANTLRTree = ANTLRItem[];
 
-export type ANTLRParserItem = string | Map<string, string> | ANTLRParserItem[];
+export type ANTLRParserItem = string | ANTLRFlags | ANTLRParserItem[];

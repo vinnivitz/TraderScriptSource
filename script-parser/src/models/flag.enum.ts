@@ -14,6 +14,7 @@ export enum FLAG {
   REQUEST_BASIC_AUTH = 'requestbasicauth',
   TYPE = 'type',
   PERIOD = 'period',
+  DESCRIPTION = 'description',
   /**
    * EMA indicator for calculating MACD
    */

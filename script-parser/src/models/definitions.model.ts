@@ -11,5 +11,6 @@ export enum SCRIPT_TYPE {
 
 export interface IndicatorData {
   type: SCRIPT_TYPE;
+  period?: string;
   data: string;
 }

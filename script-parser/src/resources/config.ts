@@ -37,6 +37,7 @@ export async function setupConfig(flags: Map<string, string>): Promise<void> {
  * @param {ANTLRFlag[]} flags
  */
 function updateMetadata(flags: Map<string, string>): void {
+  globals.metaData.configName = flags.get(FLAG.NAME);
   globals.metaData.interval = flags.get(FLAG.INTERVAL) ?? '5s';
   globals.metaData.influxBucket = `${flags.get(FLAG.NAME)}_${
     INFLUX_ENTITY_TYPE.BUCKETS
@@ -94,7 +95,7 @@ function runTelegraf(configID: string): void {
       env: { ...process.env, ...{ INFLUX_TOKEN: globals.metaData.influxToken } }
     }
   );
-
+  
   cmd.on('error', (error) => {
     throw error.message;
   });

@@ -63,6 +63,7 @@ async function updateMetaData(organization: string): Promise<void> {
   globals.metaData.orgID = authorization.orgID;
   globals.metaData.influxToken = authorization.token;
   globals.metaData.org = authorization.org;
+  globals.metaData.username = authorization.user;
 }
 
 /**

@@ -13,4 +13,6 @@ export interface Metadata {
   influxPort?: string;
   scriptFilePath?: string;
   libDirPath?: string;
+  configName?: string;
+  username?: string;
 }

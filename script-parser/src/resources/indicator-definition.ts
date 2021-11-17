@@ -45,7 +45,11 @@ function setCommonQueryScript(
     [FLAG.PRICE_KEY, globals.metaData.defaultPriceKey],
     [FLAG.PERIOD]
   );
-  globals.indicators.set(flags.get(FLAG.NAME), { type, data: query });
+  globals.indicators.set(flags.get(FLAG.NAME), {
+    type,
+    period: flags.get(FLAG.PERIOD),
+    data: query
+  });
 }
 
 /**
