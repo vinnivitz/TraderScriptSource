@@ -147,7 +147,8 @@ function createDashboardConfigFile(): void {
   };
   writeFileSync(
     `${process.env.DASHBOARD_PATH ?? '/home/dashboard'}/assets/config.json`,
-    JSON.stringify(config)
+    JSON.stringify(config),
+    { flag: 'w' }
   );
 }
 
