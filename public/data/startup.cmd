@@ -59,7 +59,7 @@ if not "!setup_influx!"=="n" (goto :done2) else (
     :done3
     cls
     echo InfluxDB started successfully!
-    echo !http_response! | find "true" >nul
+    echo %http_response% | findstr /C:"true" >nul
     if %errorlevel% == 1 (
         echo You already setup your InfluxDB account. For reset please delete the directory where InfluxDB data is persisted.
         set continue=
@@ -88,4 +88,4 @@ echo Starting program...
 docker rm --force !docker_container! >nul 2>&1
 del server-log.txt
 del http-log.txt
-docker run -e INFLUX_DOCKER=true -p %influx_port%:8086 -p %dashboard_port%:4200 -v %influx_data%:/root/.influxdbv2 -v %script_file_path%:/home/config.txt --name %docker_container% --add-host host.docker.internal:host-gateway %docker_image% /home/run.sh
+docker run -e INFLUX_DOCKER=true -p %influx_port%:8086 -p %dashboard_port%:3000 -v %influx_data%:/root/.influxdbv2 -v %script_file_path%:/home/config.txt --name %docker_container% --add-host host.docker.internal:host-gateway %docker_image% /home/run.sh
