@@ -96,7 +96,7 @@ async function cleanupInflux(): Promise<void> {
       start: '1970-01-01T00:00:00Z',
       stop: `${date.getFullYear()}-${
         date.getMonth() + 1 < 10
-          ? '0' + date.getMonth() + 1
+          ? '0' + (date.getMonth() + 1)
           : date.getMonth() + 1
       }-${
         date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
