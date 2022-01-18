@@ -151,7 +151,7 @@ export class ChartState {
         number: ++i,
         name: notification['check_type\r'].substring(
           0,
-          notification['check_type\r'].length - 2
+          notification['check_type\r'].length - 1
         ),
         time: this.getTimeFromDate(new Date(notification._time)),
         description: notification._value,
