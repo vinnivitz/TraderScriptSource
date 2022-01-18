@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/vinni/Documents/bachelorarbeit/source/TraderScriptSource/dashboard/src/main.ts */"zUnb");
+module.exports = __webpack_require__(/*! /home/vinni/Documents/uni/bachelorarbeit/TraderScriptSource/dashboard/src/main.ts */"zUnb");
 
 
 /***/ }),
@@ -230,7 +230,7 @@ let ChartState = ChartState_1 = class ChartState {
                 .slice(0, notifications.length - 2)
                 .map((notification, i) => ({
                 number: ++i,
-                name: notification['check_type\r'].substring(0, notification['check_type\r'].length - 2),
+                name: notification['check_type\r'].substring(0, notification['check_type\r'].length - 1),
                 time: this.getTimeFromDate(new Date(notification._time)),
                 description: notification._value,
                 sent: notification._sent

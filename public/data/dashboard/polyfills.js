@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/vinni/Documents/bachelorarbeit/source/TraderScriptSource/dashboard/src/polyfills.ts */"hN/g");
+module.exports = __webpack_require__(/*! /home/vinni/Documents/uni/bachelorarbeit/TraderScriptSource/dashboard/src/polyfills.ts */"hN/g");
 
 
 /***/ }),
