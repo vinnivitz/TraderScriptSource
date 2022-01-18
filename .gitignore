@@ -4,9 +4,6 @@ node_modules
 # environments
 .env
 
-# prettier config
-.prettierrc
-
 # telegraf script
 script-parser/src/lib/telegraf/telegraf.sh
 
