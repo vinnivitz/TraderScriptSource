@@ -1,16 +1,19 @@
-import { DashboardData } from './models/dashboard-data.model';
 import { CharStreams, CommonTokenStream, ParserRuleContext } from 'antlr4ts';
 import { readFileSync, writeFileSync } from 'fs';
-import { ANTLRTree, COMMAND, FLAG, SCRIPT_TYPE } from './models';
+import { ANTLRTree, COMMAND, DashboardData, FLAG, SCRIPT_TYPE } from './models';
 import { InfluxLexer, InfluxParser, CustomInfluxVisitor } from './lib/antlr';
-import { authenticate, setupDefinition, setupIndicators } from './resources';
+import {
+  authenticate,
+  setupConfig,
+  setupDefinition,
+  setupIndicators
+} from './resources';
 import {
   executeSequentially,
   extractPeriodNumberFromString,
   globals
 } from './utils';
 import axios from 'axios';
-import { setupConfig } from './resources/config';
 
 /**
  * Fetches the user script parses the tree and executes the programm.

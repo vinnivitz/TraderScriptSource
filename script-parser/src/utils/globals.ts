@@ -1,4 +1,4 @@
-import { Globals } from '../models/globals.model';
+import { Globals } from "../models";
 
 export const globals: Globals = {
   metaData: {},

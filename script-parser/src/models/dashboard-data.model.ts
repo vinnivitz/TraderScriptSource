@@ -1,4 +1,5 @@
-import { SCRIPT_TYPE } from './definitions.model';
+import { SCRIPT_TYPE } from './';
+
 /**
  * Type for dashboard config where needed data from user config is stored.
  */

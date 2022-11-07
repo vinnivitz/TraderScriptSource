@@ -1,10 +1,14 @@
-import { INFLUX_SYSTEM_BUCKET } from './../models/influx-system-bucket.enum';
-import { INFLUX_BUCKET_TYPE } from './../models/influx-bucket-type.enum';
-import { InfluxBucket } from './../models/influx-bucket.model';
-import { Authorization, FLAG, INFLUX_ENTITY_TYPE } from '../models';
+import {
+  Authorization,
+  FLAG,
+  InfluxBucket,
+  InfluxEntity,
+  INFLUX_BUCKET_TYPE,
+  INFLUX_ENTITY_TYPE,
+  INFLUX_SYSTEM_BUCKET
+} from '../models';
 import axios from 'axios';
 import { executeSequentially, globals } from '../utils';
-import { InfluxEntity } from '../models/influx-entity.model';
 
 /**
  * Executes authentication process.

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { FLAG, INFLUX_ENTITY_TYPE, SCRIPT_TYPE } from '../models';
 import { readFileSync } from 'fs';
-import { globals } from './globals';
+import { globals } from './';
 
 /**
  * Iterates over a given array of promises and executes every promise sequentially.

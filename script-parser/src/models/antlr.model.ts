@@ -1,5 +1,4 @@
-import { FLAG } from './flag.enum';
-import { COMMAND } from './command.enum';
+import { COMMAND, FLAG } from './';
 
 export type ANTLRFlags = Map<FLAG, string>;
 
